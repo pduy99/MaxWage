@@ -11,7 +11,7 @@
 
     <item
         android:id="@+id/menu_item_jobs"
-        android:title="@string/timetable"
+        android:title="@string/jobs"
         android:icon="@drawable/ic_state_job"
         app:showAsAction="always"
         android:enabled="true"/>
@@ -26,14 +26,14 @@
 
     <item
         android:id="@+id/menu_item_account"
-        android:title="@string/timetable"
+        android:title="@string/account"
         android:icon="@drawable/ic_state_person"
         app:showAsAction="always"
         android:enabled="true"/>
 
     <item
         android:id="@+id/menu_item_setting"
-        android:title="@string/timetable"
+        android:title="@string/setting"
         android:icon="@drawable/ic_state_setting"
         app:showAsAction="always"
         android:enabled="true"/>

@@ -28,7 +28,8 @@
             android:clickable="false"
             app:fabAlignmentMode="center"
             app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp">
+            app:contentInsetStart="0dp"
+            app:hideOnScroll="true">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottom_navigation"
@@ -43,7 +44,7 @@
         </com.google.android.material.bottomappbar.BottomAppBar>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fb_new_suggestion"
+            android:id="@+id/fab_new_suggestion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_anchor="@id/bottom_bar"
@@ -52,7 +53,8 @@
             app:tint="@color/white"
             app:hideOnScroll="true"
             app:layout_scrollFlags="scroll|enterAlways"
-            android:contentDescription="@string/suggest_new_jobs" />
+            android:contentDescription="@string/suggest_new_jobs"
+            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
