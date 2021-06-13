@@ -1,5 +1,6 @@
 package com.helios.maxwage.api
 
+import android.util.Log
 import org.json.JSONObject
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
@@ -11,6 +12,7 @@ open class ResponseHandler {
     }
 
     fun <T : Any> handleException(e: Exception): Resource<T> {
+        Log.d(TAG, e.toString())
         return when (e) {
             is HttpException -> {
                 Resource.error(parseErrorBody(e) ?: getDefaultErrorMessage(e.code()))
@@ -38,7 +40,7 @@ open class ResponseHandler {
     private fun parseErrorBody(ex: HttpException): String? {
         return try {
             val jObjError = JSONObject(ex.response()?.errorBody()!!.string())
-            val message = jObjError.getString("message")
+            val message = jObjError.getString("status_message")
             if (message != "") {
                 message
             } else {
@@ -47,5 +49,9 @@ open class ResponseHandler {
         } catch (ex: Exception) {
             null
         }
+    }
+
+    companion object {
+        const val TAG = "ResponseHandler"
     }
 }

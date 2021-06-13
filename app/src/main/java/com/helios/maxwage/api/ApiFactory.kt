@@ -38,9 +38,9 @@ object ApiFactory {
         return OkHttpClient.Builder()
             .addInterceptor(interceptor)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
-            .connectTimeout(1000.toLong(), TimeUnit.SECONDS)
-            .readTimeout(1000.toLong(), TimeUnit.SECONDS)
-            .writeTimeout(1000.toLong(), TimeUnit.SECONDS)
+            .connectTimeout(20.toLong(), TimeUnit.SECONDS)
+            .readTimeout(20.toLong(), TimeUnit.SECONDS)
+            .writeTimeout(20.toLong(), TimeUnit.SECONDS)
             .build()
     }
 }

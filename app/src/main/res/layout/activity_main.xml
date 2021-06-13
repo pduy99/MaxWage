@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".views.activities.MainActivity"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".views.activities.MainActivity">
 
         <FrameLayout
             android:id="@+id/host_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="?attr/actionBarSize"
             app:layout_constraintBottom_toTopOf="@id/bottom_bar"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -24,37 +24,21 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="bottom"
             android:background="@android:color/transparent"
-            app:fabCradleMargin="8dp"
             android:clickable="false"
-            app:fabAlignmentMode="center"
             app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
-            app:hideOnScroll="true">
+            app:contentInsetStart="0dp">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottom_navigation"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:elevation="0dp"
                 android:background="@android:color/transparent"
-                app:menu="@menu/bottom_navigation_menu"
                 android:outlineAmbientShadowColor="@android:color/transparent"
-                android:outlineSpotShadowColor="@android:color/transparent"/>
+                android:outlineSpotShadowColor="@android:color/transparent"
+                app:elevation="0dp"
+                app:menu="@menu/bottom_navigation_menu" />
 
         </com.google.android.material.bottomappbar.BottomAppBar>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_new_suggestion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_anchor="@id/bottom_bar"
-            android:src="@drawable/ic_add"
-            android:backgroundTint="@color/colorPrimary"
-            app:tint="@color/white"
-            app:hideOnScroll="true"
-            app:layout_scrollFlags="scroll|enterAlways"
-            android:contentDescription="@string/suggest_new_jobs"
-            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
