@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge>
+
+    <nl.bryanderidder.themedtogglebuttongroup.ThemedButton xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="@dimen/btn_working_shift_width"
+        android:layout_height="@dimen/btn_working_shift_height"
+        app:toggle_backgroundColor="@android:color/white"
+        app:toggle_borderColor="#C6C6C6"
+        app:toggle_borderWidth="5dp"
+        app:toggle_btnCornerRadius="50dp"
+        app:toggle_icon="@drawable/ic_sunrise"
+        app:toggle_iconColor="#C6C6C6"
+        app:toggle_iconPadding="25dp"
+        app:toggle_selectedBackgroundColor="@color/colorPrimary"
+        app:toggle_selectedBorderColor="@color/colorPrimary"
+        app:toggle_selectedIcon="@drawable/ic_sunrise" />
+</merge>
+

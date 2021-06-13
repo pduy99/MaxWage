@@ -10,7 +10,6 @@ import com.helios.maxwage.models.Job
  */
 class JobRepository(private val responseHandler: ResponseHandler) {
 
-
     companion object {
         private var INSTANCE: JobRepository? = null
         fun getInstance() = INSTANCE
@@ -19,9 +18,22 @@ class JobRepository(private val responseHandler: ResponseHandler) {
             }
     }
 
-    suspend fun getAllJobs() : Resource<List<Job>>{
+    suspend fun getAllJobs(accessToken: String): Resource<List<Job>> {
         return try {
-            responseHandler.handleSuccess(ApiFactory.instance.getAllJobs())
+            responseHandler.handleSuccess(ApiFactory.instance.getAllJobs("Bearer $accessToken"))
+        } catch (ex: Exception) {
+            responseHandler.handleException(ex)
+        }
+    }
+
+    suspend fun getJobById(accessToken: String, jobId: String): Resource<Job> {
+        return try {
+            responseHandler.handleSuccess(
+                ApiFactory.instance.getJobById(
+                    "Bearer $accessToken",
+                    jobId
+                )
+            )
         } catch (ex: Exception) {
             responseHandler.handleException(ex)
         }

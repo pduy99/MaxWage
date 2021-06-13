@@ -1,6 +1,10 @@
 package com.helios.maxwage.api
 
-data class Resource<out T>(val status: ApiStatus, val data: T?, val message: String?) {
+data class Resource<out T> private constructor(
+    val status: ApiStatus,
+    val data: T?,
+    val message: String?
+) {
     companion object {
         fun <T> success(data: T?, message: String?): Resource<T> {
             return Resource(ApiStatus.SUCCESS, data, message)

@@ -9,11 +9,13 @@ import com.helios.maxwage.R
  * Created by Helios on 3/16/2021.
  */
 
-fun FragmentManager.push(fragment: Fragment,
-                         intAnim: Int = R.anim.abc_grow_fade_in_from_bottom,
-                         outAnim: Int = R.anim.abc_shrink_fade_out_from_bottom,
-                         container: Int,
-                         allowAddToBackStack: Boolean = false) {
+fun FragmentManager.push(
+    fragment: Fragment,
+    intAnim: Int = R.anim.abc_grow_fade_in_from_bottom,
+    outAnim: Int = R.anim.abc_shrink_fade_out_from_bottom,
+    container: Int,
+    allowAddToBackStack: Boolean = false
+) {
     beginTransaction().setCustomAnimations(intAnim, outAnim)
         .add(container, fragment, fragment::class.java.simpleName)
         .also {
@@ -24,11 +26,13 @@ fun FragmentManager.push(fragment: Fragment,
         .commitAllowingStateLoss()
 }
 
-fun FragmentManager.replace(fragment: Fragment,
-                            intAnim: Int = R.anim.abc_grow_fade_in_from_bottom,
-                            outAnim: Int = R.anim.abc_shrink_fade_out_from_bottom,
-                            container: Int,
-                            allowAddToBackStack: Boolean = false) {
+fun FragmentManager.replace(
+    fragment: Fragment,
+    intAnim: Int = R.anim.abc_grow_fade_in_from_bottom,
+    outAnim: Int = R.anim.abc_shrink_fade_out_from_bottom,
+    container: Int,
+    allowAddToBackStack: Boolean = false
+) {
     beginTransaction().setCustomAnimations(intAnim, outAnim)
         .replace(container, fragment, fragment::class.java.simpleName)
         .also {
@@ -39,9 +43,11 @@ fun FragmentManager.replace(fragment: Fragment,
         .commitAllowingStateLoss()
 }
 
-fun FragmentManager.remove(fragment: Fragment,
-                           intAnim: Int = R.anim.abc_grow_fade_in_from_bottom,
-                           outAnim: Int = R.anim.abc_shrink_fade_out_from_bottom) {
+fun FragmentManager.remove(
+    fragment: Fragment,
+    intAnim: Int = R.anim.abc_grow_fade_in_from_bottom,
+    outAnim: Int = R.anim.abc_shrink_fade_out_from_bottom
+) {
     beginTransaction().setCustomAnimations(intAnim, outAnim)
         .remove(fragment)
         .commitAllowingStateLoss()

@@ -1,2 +1,3 @@
+include ':timetableview'
 include ':app'
 rootProject.name = "MaxWage"

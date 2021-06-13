@@ -12,9 +12,10 @@ import com.squareup.picasso.Picasso
 /**
  * Created by Helios on 4/18/2021.
  */
-class ListJobAdapter(var jobs: List<Job>) : RecyclerView.Adapter<ListJobAdapter.ViewHolder>() {
+class ListJobAdapter(var jobs: List<Job>, var listFavorite: List<String>) :
+    RecyclerView.Adapter<ListJobAdapter.ViewHolder>() {
 
-    inner class ViewHolder(var layout: ItemJobBinding): RecyclerView.ViewHolder(layout.root){
+    inner class ViewHolder(var layout: ItemJobBinding) : RecyclerView.ViewHolder(layout.root) {
 
         private val jobAvatar = layout.ivJobAvatar
 
@@ -23,11 +24,17 @@ class ListJobAdapter(var jobs: List<Job>) : RecyclerView.Adapter<ListJobAdapter.
         }
     }
 
-    var onClick : ((String) -> Unit)? = null
-    var onClickFavorite: ((String) -> Unit)? = null
+    var onClick: ((String) -> Unit)? = null
+    var onAddFavoriteJob: ((String) -> Unit)? = null
+    var onRemoveFavoriteJob: ((String) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding : ItemJobBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_job, parent, false)
+        val binding: ItemJobBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.item_job,
+            parent,
+            false
+        )
 
         return ViewHolder(binding)
     }
@@ -40,11 +47,21 @@ class ListJobAdapter(var jobs: List<Job>) : RecyclerView.Adapter<ListJobAdapter.
             onClick?.invoke(job._id)
         }
         holder.layout.btnFavorite.setOnClickListener {
-            onClickFavorite?.invoke(job._id)
+            if (listFavorite.contains(job._id)) {
+                onRemoveFavoriteJob?.invoke(job._id)
+            } else {
+                onAddFavoriteJob?.invoke(job._id)
+            }
         }
 
-        if(job.avatar.isNotBlank()){
+        if (job.avatar.isNotBlank()) {
             holder.setupJobAvatar(job.avatar)
+        }
+
+        if (listFavorite.contains(job._id)) {
+            holder.layout.btnFavorite.setImageResource(R.drawable.ic_favorite_24)
+        } else {
+            holder.layout.btnFavorite.setImageResource(R.drawable.ic_favorite_border)
         }
     }
 

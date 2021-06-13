@@ -12,6 +12,7 @@ object SharedPrefs {
     private const val MODE = Context.MODE_PRIVATE
     private lateinit var preferences: SharedPreferences
 
+    private val ACCESS_TOKEN = Pair("access_token", String)
     private val SELECTED_FRAGMENT = Pair("selected_fragment", Int)
 
     fun init(context: Context) {
@@ -26,13 +27,23 @@ object SharedPrefs {
 
     // Properties
 
-    var selected_fragment: Int?
+    var accessToken: String?
         get() {
-            return preferences.getInt("selected_fragment", 0)
+            return preferences.getString(ACCESS_TOKEN.first, null)
         }
         set(value) {
             preferences.edit {
-                it.putInt("selected_fragment", value!!)
+                it.putString(ACCESS_TOKEN.first, value)
+            }
+        }
+
+    var selectedFragment: Int?
+        get() {
+            return preferences.getInt(SELECTED_FRAGMENT.first, 0)
+        }
+        set(value) {
+            preferences.edit {
+                it.putInt(SELECTED_FRAGMENT.first, value!!)
             }
         }
 }
