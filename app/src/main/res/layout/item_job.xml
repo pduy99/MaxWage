@@ -1,98 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="job"
             type="com.helios.maxwage.models.Job" />
     </data>
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:orientation="horizontal"
-        android:padding="12dp"
-        android:weightSum="10">
+        app:cardCornerRadius="8dp"
+        app:cardUseCompatPadding="true">
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="2">
+            android:padding="12dp">
 
-            <ImageView
-                android:id="@+id/iv_jobAvatar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_kfc"/>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_logo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:cardBackgroundColor="@color/white_smoke"
+                app:cardCornerRadius="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        </LinearLayout>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv_JobAvatar"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:theme="@style/roundLogoJob" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:layout_weight="7">
+            </androidx.cardview.widget.CardView>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tvCompany"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:text="@{job.name}"
-                android:textSize="15sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="KFC"
+                android:layout_marginStart="15dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{job.company}"
                 android:textSize="13sp"
-                android:textStyle="bold"/>
+                app:layout_constraintStart_toEndOf="@+id/cardview_logo"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tv_JobTitle"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:maxLines="2"
+                android:text="@{job.name}"
+                android:textAllCaps="true"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/cardview_logo"
+                app:layout_constraintTop_toBottomOf="@+id/tvCompany" />
+
+            <LinearLayout
+                android:id="@+id/container_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:ellipsize="start"
-                android:text="@{job.address}"/>
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toEndOf="@+id/cardview_logo"
+                app:layout_constraintTop_toBottomOf="@+id/tv_JobTitle">
+
+                <ImageView
+                    android:id="@+id/iv_location"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_location_on"
+                    app:tint="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{job.address}"
+                    android:textSize="13sp"
+                    app:layout_constraintWidth_max="230dp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toEndOf="@+id/cardview_logo"
+                app:layout_constraintTop_toBottomOf="@+id/container_location">
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/ic_access_time"/>
+                    android:id="@+id/iv_info"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_outline_info_24"
+                    app:tint="@color/colorPrimary" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="@{job.flexible ? `Flexible Time` : `Fixed Time`}"/>
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Wage:"
+                    android:textSize="13sp" />
 
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{String.valueOf(job.salary)}"
+                    android:textSize="13sp" />
             </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="top|end">
-
             <ImageView
-                android:id="@+id/btnFavorite"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/ic_favorite_border"/>
+                android:id="@+id/btn_Favorite"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_favorite_border"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/colorPrimary" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

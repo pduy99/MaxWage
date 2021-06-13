@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_height="match_parent"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        tools:context=".views.fragments.JobFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -24,24 +23,44 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-
-
-        <androidx.core.widget.NestedScrollView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".views.fragments.TimetableFragment">
+            android:layout_marginTop="?attr/actionBarSize"
+            android:orientation="vertical">
 
-            <com.github.tlaabs.timetableview.TimetableView
-                android:id="@+id/timetable"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:column_count="8"
-                app:row_count="25"
-                app:start_time="0"
-                app:header_title="@array/my_header_title"/>
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-        </androidx.core.widget.NestedScrollView>
+                <com.github.tlaabs.timetableview.TimetableView
+                    android:id="@+id/timetable"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:column_count="8"
+                    app:header_title="@array/timetable_header"
+                    app:is_12h="false"
+                    app:row_count="25"
+                    app:start_time="0" />
 
-    </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_new_schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:contentDescription="@string/suggest_new_jobs"
+            android:src="@drawable/ic_add"
+            app:hideOnScroll="true"
+            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:tint="@color/white" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

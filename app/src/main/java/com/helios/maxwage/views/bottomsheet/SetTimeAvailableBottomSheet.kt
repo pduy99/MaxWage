@@ -1,102 +1,119 @@
 package com.helios.maxwage.views.bottomsheet
 
-import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.core.view.ViewCompat
-import androidx.fragment.app.DialogFragment
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.shape.MaterialShapeDrawable
-import com.google.android.material.shape.ShapeAppearanceModel
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.helios.maxwage.R
+import com.helios.maxwage.api.ApiStatus
 import com.helios.maxwage.databinding.LayoutSetTimeAvailabilityBinding
-import com.helios.maxwage.databinding.LayoutTimeAvailabilityBinding
+import com.helios.maxwage.interfaces.IButtonScheduleClick
+import com.helios.maxwage.models.JobSchedule
+import com.helios.maxwage.utils.fragment.replace
+import com.helios.maxwage.viewmodels.SetTimeAvailableViewModel
+import com.helios.maxwage.views.base.BaseBottomSheetFragment
 
 /**
  * Created by Helios on 3/17/2021.
  */
 
-class SetTimeAvailableBottomSheet : BottomSheetDialogFragment() {
+class SetTimeAvailableBottomSheet private constructor() : BaseBottomSheetFragment(),
+    IButtonScheduleClick {
 
-    private lateinit var binding : LayoutSetTimeAvailabilityBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_MaterialComponents_BottomSheetDialog)
+    private lateinit var binding: LayoutSetTimeAvailabilityBinding
+    private val viewModel: SetTimeAvailableViewModel by viewModels()
+    private val freeTimeFragment: SetFreeTimeFragment by lazy {
+        SetFreeTimeFragment.newInstance(this)
+    }
+    private val workShiftFragment: SetFreeWorkShiftFragment by lazy {
+        SetFreeWorkShiftFragment.newInstance(this)
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return super.onCreateDialog(savedInstanceState).also { dialog ->
-            dialog.setOnShowListener {
-                (dialog as BottomSheetDialog).let { bottomSheetDialog ->
-                    val bottomSheet: FrameLayout =
-                            bottomSheetDialog.findViewById(R.id.design_bottom_sheet)!!
-                    val behavior = BottomSheetBehavior.from(bottomSheet)
-                    behavior.apply {
-                        state = BottomSheetBehavior.STATE_EXPANDED
-                        skipCollapsed = true
-                    }
-                    behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-                        override fun onStateChanged(bottomSheet: View, newState: Int) {
-                            if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                                //In the EXPANDED STATE apply a new MaterialShapeDrawable with rounded corner
-                                val newMaterialShapeDrawable: MaterialShapeDrawable = createMaterialShapeDrawable(bottomSheet)
-                                ViewCompat.setBackground(bottomSheet, newMaterialShapeDrawable)
-                            }
-                        }
+    var onNewSchedule: ((JobSchedule) -> Unit)? = null
 
-                        override fun onSlide(bottomSheet: View, slideOffset: Float) {}
-                    })
+    override val TAG: String
+        get() = "AvailableTimeFragment"
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = LayoutSetTimeAvailabilityBinding.inflate(inflater, container, false)
+
+        childFragmentManager.replace(workShiftFragment, container = R.id.frameLayoutContent)
+        initData()
+        initializeViewComponents()
+
+        return binding.root
+    }
+
+    private fun initData() {
+
+    }
+
+    private fun initializeViewComponents() {
+        with(binding) {
+            segmentGroupFreeTime.setOnPositionChangedListener { newPosition ->
+                if (newPosition == 0) {
+                    childFragmentManager.replace(
+                        workShiftFragment,
+                        container = R.id.frameLayoutContent,
+                        allowAddToBackStack = true
+                    )
+                } else if (newPosition == 1) {
+                    childFragmentManager.replace(
+                        freeTimeFragment,
+                        container = R.id.frameLayoutContent,
+                        allowAddToBackStack = true
+                    )
                 }
             }
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = LayoutSetTimeAvailabilityBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
-
-    override fun getTheme(): Int {
-        return R.style.CustomBottomSheetDialog
-    }
-
-    private fun createMaterialShapeDrawable(bottomSheet: View): MaterialShapeDrawable {
-        val shapeAppearanceModel =  //Create a ShapeAppearanceModel with the same shapeAppearanceOverlay used in the style
-                ShapeAppearanceModel.builder(context, 0, R.style.CustomShapeAppearanceBottomSheetDialog)
-                        .build()
-
-        //Create a new MaterialShapeDrawable (you can't use the original MaterialShapeDrawable in the BottomSheet)
-        val currentMaterialShapeDrawable = bottomSheet.background as MaterialShapeDrawable
-        val newMaterialShapeDrawable = MaterialShapeDrawable(shapeAppearanceModel)
-        //Copy the attributes in the new MaterialShapeDrawable
-        newMaterialShapeDrawable.initializeElevationOverlay(context)
-        newMaterialShapeDrawable.fillColor = currentMaterialShapeDrawable.fillColor
-        newMaterialShapeDrawable.tintList = currentMaterialShapeDrawable.tintList
-        newMaterialShapeDrawable.elevation = currentMaterialShapeDrawable.elevation
-        newMaterialShapeDrawable.strokeWidth = currentMaterialShapeDrawable.strokeWidth
-        newMaterialShapeDrawable.strokeColor = currentMaterialShapeDrawable.strokeColor
-        return newMaterialShapeDrawable
-    }
-
-    fun onTimeToggle(view: View){
-        view as TextView
-        view.isSelected = !view.isSelected
-    }
 
     companion object {
         fun newInstance(): SetTimeAvailableBottomSheet {
             return SetTimeAvailableBottomSheet()
         }
+    }
 
-        const val TAG = "SetTimeAvailableBottomSheet"
+    override fun onButtonScheduleClick(selectedHour: Array<Boolean>, isOnlyFavoriteJobs: Boolean) {
+        val freeTimeArgument = viewModel.buildFreeTimeArgument(selectedHour)
+
+        viewModel.scheduleJob(freeTimeArgument, isOnlyFavoriteJobs)
+            .observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ApiStatus.LOADING -> {
+                        this@SetTimeAvailableBottomSheet.showLoadingDialog(
+                            "Scheduling",
+                            requireContext().getString(R.string.scheduling_dialog_message)
+                        )
+                    }
+                    ApiStatus.SUCCESS -> {
+                        this@SetTimeAvailableBottomSheet.hideLoadingDialog()
+
+                        if (it.data!!.combo.isEmpty()) {
+                            this@SetTimeAvailableBottomSheet.showMessageDialog(
+                                "No Job Schedule Found",
+                                "Sorry, we could not find any jobs matching your conditions."
+                            )
+                        } else {
+                            onNewSchedule?.invoke(it.data)
+                            this@SetTimeAvailableBottomSheet.dismiss()
+                        }
+                    }
+                    ApiStatus.ERROR -> {
+                        this@SetTimeAvailableBottomSheet.hideLoadingDialog()
+                        this@SetTimeAvailableBottomSheet.showMessageToast(it.message!!)
+                        Log.d(TAG, "${it.message}")
+                    }
+                }
+            })
     }
 
 }
