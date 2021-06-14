@@ -14,6 +14,7 @@ object SharedPrefs {
 
     private val ACCESS_TOKEN = Pair("access_token", String)
     private val SELECTED_FRAGMENT = Pair("selected_fragment", Int)
+    private val SAVED_JOB_SCHEDULE = Pair("saved_job_schedule", String)
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME, MODE)
@@ -27,9 +28,9 @@ object SharedPrefs {
 
     // Properties
 
-    var accessToken: String?
+    var accessToken: String
         get() {
-            return preferences.getString(ACCESS_TOKEN.first, null)
+            return preferences.getString(ACCESS_TOKEN.first, "") ?: ""
         }
         set(value) {
             preferences.edit {
@@ -44,6 +45,16 @@ object SharedPrefs {
         set(value) {
             preferences.edit {
                 it.putInt(SELECTED_FRAGMENT.first, value!!)
+            }
+        }
+
+    var savedJobSchedule: String?
+        get() {
+            return preferences.getString(SAVED_JOB_SCHEDULE.first, null)
+        }
+        set(value) {
+            preferences.edit {
+                it.putString(SAVED_JOB_SCHEDULE.first, value)
             }
         }
 }
