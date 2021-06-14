@@ -5,20 +5,26 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.helios.maxwage.R
 import com.helios.maxwage.adapters.ListJobAdapter
 import com.helios.maxwage.api.ApiStatus
 import com.helios.maxwage.databinding.FragmentJobBinding
+import com.helios.maxwage.utils.replace
 import com.helios.maxwage.viewmodels.JobFragmentViewModel
+import com.helios.maxwage.views.activities.MainActivity
+import com.helios.maxwage.views.base.BaseFragment
 
-class JobFragment : Fragment() {
+class JobFragment : BaseFragment() {
 
     private lateinit var binding: FragmentJobBinding
     private lateinit var viewModel: JobFragmentViewModel
     private lateinit var adapter: ListJobAdapter
+
+    override val TAG: String
+        get() = "JobFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,10 +79,15 @@ class JobFragment : Fragment() {
     }
 
     private fun initializeViewComponents() {
+        (activity as MainActivity).hideFab()
         with(binding) {
             adapter = ListJobAdapter(listOf(), listOf()).apply {
                 onClick = {
-
+                    parentFragmentManager.replace(
+                        JobDetailFragment.newInstance(it),
+                        container = R.id.host_fragment,
+                        allowAddToBackStack = true
+                    )
                 }
 
                 onAddFavoriteJob = { jobId ->
@@ -118,8 +129,6 @@ class JobFragment : Fragment() {
     }
 
     companion object {
-        const val TAG = "JobFragment"
-
         @JvmStatic
         fun newInstance(param1: String, param2: String) = JobFragment()
     }

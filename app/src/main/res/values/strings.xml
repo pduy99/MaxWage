@@ -34,6 +34,14 @@
     <string name="cancel">Cancel</string>
     <string name="total_working_hour_message">I would like to work %1$d hours a week</string>
     <string name="maximum_working_hour_alert">You can only work maximum %1$d hours a week, current %2$d hours</string>
+    <string name="apply_now">Apply now</string>
+    <string name="save">Save</string>
+    <string name="logo_of_company">Logo of company</string>
+    <string name="location">Location</string>
+    <string name="wage">Wage</string>
+    <string name="work_schedule">Work schedule</string>
+    <string name="skills_requirement">Skills requirement</string>
+    <string name="job_description">Job Description</string>
 
     <string-array name="timetable_header">
         <item></item>
