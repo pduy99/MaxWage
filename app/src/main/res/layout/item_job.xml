@@ -47,38 +47,43 @@
 
             <TextView
                 android:id="@+id/tvCompany"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
+                android:layout_marginEnd="40dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@{job.company}"
                 android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cardview_logo"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_JobTitle"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginEnd="40dp"
                 android:maxLines="2"
                 android:text="@{job.name}"
                 android:textAllCaps="true"
                 android:textSize="15sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cardview_logo"
                 app:layout_constraintTop_toBottomOf="@+id/tvCompany" />
 
             <LinearLayout
                 android:id="@+id/container_location"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="11dp"
                 android:layout_marginTop="8dp"
-                android:gravity="center"
+                android:gravity="left"
                 android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cardview_logo"
                 app:layout_constraintTop_toBottomOf="@+id/tv_JobTitle">
 
@@ -87,11 +92,11 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/ic_location_on"
+                    android:src="@drawable/ic_location"
                     app:tint="@color/colorPrimary" />
 
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:ellipsize="end"

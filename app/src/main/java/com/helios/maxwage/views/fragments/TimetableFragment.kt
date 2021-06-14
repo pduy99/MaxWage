@@ -1,13 +1,19 @@
 package com.helios.maxwage.views.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.github.tlaabs.timetableview.Schedule
+import com.helios.maxwage.R
 import com.helios.maxwage.api.ApiStatus
 import com.helios.maxwage.databinding.FragmentTimetableBinding
+import com.helios.maxwage.sharepreferences.SharedPrefs
+import com.helios.maxwage.utils.replace
 import com.helios.maxwage.viewmodels.TimeTableFragmentViewModel
+import com.helios.maxwage.views.activities.MainActivity
 import com.helios.maxwage.views.base.BaseFragment
 import com.helios.maxwage.views.bottomsheet.SetTimeAvailableBottomSheet
 
@@ -20,17 +26,39 @@ class TimetableFragment : BaseFragment() {
     override val TAG: String
         get() = "TimetableFragment"
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (activity is MainActivity) {
+            (activity as MainActivity).onFabClicked = {
+                SetTimeAvailableBottomSheet.newInstance().apply {
+                    onNewSchedule = { jobSchedule ->
+                        viewModel.buildJobSchedule(jobSchedule)
+                    }
+                }.show(
+                    childFragmentManager,
+                    SetTimeAvailableBottomSheet::class.java.name
+                )
+            }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentTimetableBinding.inflate(inflater, container, false)
 
         initializeViewComponents()
+        loadSaveSchedule()
         observeLiveData()
 
         return binding.root
+    }
+
+    override fun onPause() {
+        super.onPause()
+        SharedPrefs.savedJobSchedule = binding.timetable.createSaveData()
     }
 
     private fun observeLiveData() {
@@ -46,7 +74,7 @@ class TimetableFragment : BaseFragment() {
                         "Create schedule completed",
                         "We have created a job schedule for you with maximum salary: $totalSalary"
                     ) {
-                        binding.timetable.add(it.data)
+                        showJobSchedule(it.data)
                     }
                 }
                 ApiStatus.ERROR -> {
@@ -60,34 +88,30 @@ class TimetableFragment : BaseFragment() {
         })
     }
 
+    private fun loadSaveSchedule() {
+        SharedPrefs.savedJobSchedule?.let {
+            binding.timetable.load(it)
+        }
+    }
+
+    private fun showJobSchedule(jobSchedules: ArrayList<Schedule>) {
+        binding.timetable.add(jobSchedules)
+    }
+
     private fun initializeViewComponents() {
+        (activity as MainActivity).showFab()
+
         with(binding) {
-            fabNewSchedule.setOnClickListener {
-                SetTimeAvailableBottomSheet.newInstance().apply {
-                    onNewSchedule = { jobSchedule ->
-                        viewModel.buildJobSchedule(jobSchedule)
-                    }
-                }.show(
-                    childFragmentManager,
-                    SetTimeAvailableBottomSheet::class.java.name
+            timetable.setOnStickerSelectEventListener { idx, schedules ->
+                val jobId = schedules[idx].jobId
+
+                parentFragmentManager.replace(
+                    JobDetailFragment.newInstance(jobId),
+                    container = R.id.host_fragment,
+                    allowAddToBackStack = true
                 )
             }
         }
-
-//        val schedules = ArrayList<Schedule>()
-//        val schedule = Schedule()
-//        schedule.classTitle = "Data Structure" // sets subject
-//
-//        schedule.day = 3
-//
-//        schedule.classPlace = "IT-601" // sets place
-//
-//        schedule.startTime = Time(12, 32) // sets the beginning of class time (hour,minute)
-//
-//        schedule.endTime = Time(16, 0) // sets the end of class time (hour,minute)
-//
-//        schedules.add(schedule)
-//        binding.timetable.add(schedules)
     }
 
     companion object {

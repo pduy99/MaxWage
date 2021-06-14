@@ -12,7 +12,7 @@ import com.helios.maxwage.api.ApiStatus
 import com.helios.maxwage.databinding.LayoutSetTimeAvailabilityBinding
 import com.helios.maxwage.interfaces.IButtonScheduleClick
 import com.helios.maxwage.models.JobSchedule
-import com.helios.maxwage.utils.fragment.replace
+import com.helios.maxwage.utils.replace
 import com.helios.maxwage.viewmodels.SetTimeAvailableViewModel
 import com.helios.maxwage.views.base.BaseBottomSheetFragment
 

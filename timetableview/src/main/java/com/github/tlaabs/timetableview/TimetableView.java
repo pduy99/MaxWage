@@ -9,6 +9,7 @@ import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
@@ -291,25 +292,25 @@ public class TimetableView extends LinearLayout {
     }
 
     private void setStickerColor() {
-        int size = stickers.size();
-        int[] orders = new int[size];
-        int i = 0;
-        for (int key : stickers.keySet()) {
-            orders[i++] = key;
+        try {
+            int size = stickers.size();
+            int[] orders = new int[size];
+            int i = 0;
+            for (int key : stickers.keySet()) {
+                orders[i++] = key;
+            }
+            Arrays.sort(orders);
+
+            int colorSize = stickerColors.length;
+
+            for(i = 0; i < stickers.get(orders[0]).getView().size(); i++) {
+                TextView v = stickers.get(orders[0]).getView().get(i);
+                v.setBackgroundColor(Color.parseColor(stickerColors[i % (colorSize)]));
+            }
+        } catch (Exception ex) {
+            Log.d("TimetableView", ex.getMessage());
         }
-        Arrays.sort(orders);
 
-        int colorSize = stickerColors.length;
-
-//        for (i = 0; i < size; i++) {
-//            for (TextView v : stickers.get(orders[i]).getView()) {
-//                v.setBackgroundColor(Color.parseColor(stickerColors[i % (colorSize)]));
-//            }
-//        }
-
-        for(TextView v : stickers.get(orders[0]).getView()) {
-            v.setBackgroundColor(Color.parseColor(stickerColors[i % (colorSize)]));
-        }
     }
 
     private void createTable() {

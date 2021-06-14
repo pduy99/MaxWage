@@ -2,13 +2,14 @@ package com.helios.maxwage.views.activities
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.helios.maxwage.R
 import com.helios.maxwage.databinding.ActivityMainBinding
 import com.helios.maxwage.sharepreferences.SharedPrefs
-import com.helios.maxwage.utils.fragment.replace
+import com.helios.maxwage.utils.replace
 import com.helios.maxwage.views.fragments.AccountFragment
 import com.helios.maxwage.views.fragments.JobFragment
 import com.helios.maxwage.views.fragments.SettingFragment
@@ -17,6 +18,8 @@ import com.helios.maxwage.views.fragments.TimetableFragment
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityMainBinding
+
+    var onFabClicked: (() -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +45,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
             bottomNavigation.setOnNavigationItemReselectedListener {
                 // Nothing
+            }
+
+            fabNewSuggestion.setOnClickListener {
+                onFabClicked?.invoke()
             }
         }
     }
@@ -86,4 +93,19 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
+    fun hideNavigationView() {
+        binding.bottomBar.visibility = View.GONE
+    }
+
+    fun showNavigationView() {
+        binding.bottomBar.visibility = View.VISIBLE
+    }
+
+    fun hideFab() {
+        binding.fabNewSuggestion.hide()
+    }
+
+    fun showFab() {
+        binding.fabNewSuggestion.show()
+    }
 }

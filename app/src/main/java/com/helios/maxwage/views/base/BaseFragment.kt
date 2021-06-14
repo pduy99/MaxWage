@@ -3,6 +3,7 @@ package com.helios.maxwage.views.base
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.helios.maxwage.utils.UserNotificationHelper
+import com.helios.maxwage.views.activities.MainActivity
 
 /**
  * Created by Helios on 6/4/2021.
@@ -10,6 +11,17 @@ import com.helios.maxwage.utils.UserNotificationHelper
 
 abstract class BaseFragment : Fragment() {
     private var loadingDialog: AlertDialog? = null
+
+    override fun onResume() {
+        super.onResume()
+        if (activity is MainActivity) {
+            if (shouldHideNavigationView) {
+                (activity as MainActivity).hideNavigationView()
+            } else {
+                (activity as MainActivity).showNavigationView()
+            }
+        }
+    }
 
     fun showLoadingDialog(title: String, message: String, actionOnCancel: () -> Unit = {}) {
         runOnUIThread {
@@ -69,4 +81,5 @@ abstract class BaseFragment : Fragment() {
     }
 
     abstract val TAG: String
+    protected open val shouldHideNavigationView: Boolean = false
 }

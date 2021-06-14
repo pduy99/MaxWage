@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.helios.maxwage.api.Resource
 import com.helios.maxwage.repositories.UserRepository
-import com.helios.maxwage.utils.string.StringUtils.isEmailFormat
+import com.helios.maxwage.utils.isEmailFormat
 
 /**
  * Created by Helios on 4/27/2021.

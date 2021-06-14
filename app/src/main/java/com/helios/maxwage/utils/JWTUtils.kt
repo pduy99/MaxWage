@@ -8,9 +8,12 @@ import com.helios.maxwage.sharepreferences.SharedPrefs
  * Created by Helios on 6/2/2021.
  */
 object JWTUtils {
-    fun checkExpired(token: String): Boolean {
-        val jwt = JWT(token)
-        return jwt.isExpired(0)
+    fun checkExpired(): Boolean {
+        SharedPrefs.accessToken?.let {
+            val jwt = JWT(it)
+            return jwt.isExpired(0)
+        }
+        return true
     }
 
     fun parseId(): String? {

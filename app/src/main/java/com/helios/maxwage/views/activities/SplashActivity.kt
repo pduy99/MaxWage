@@ -3,7 +3,6 @@ package com.helios.maxwage.views.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.helios.maxwage.sharepreferences.SharedPrefs
 import com.helios.maxwage.utils.JWTUtils
 
 class SplashActivity : AppCompatActivity() {
@@ -25,9 +24,6 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun checkTokenExpired(): Boolean {
-        SharedPrefs.accessToken?.let {
-            return JWTUtils.checkExpired(it)
-        }
-        return false
+        return JWTUtils.checkExpired()
     }
 }
