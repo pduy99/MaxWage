@@ -1,7 +1,12 @@
 package com.helios.maxwage.utils
 
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.github.tlaabs.timetableview.Schedule
+import com.helios.maxwage.models.DayInWeek
+import com.helios.maxwage.models.WorkingTime
+import com.squareup.picasso.Picasso
 import java.text.NumberFormat
 import java.util.*
 
@@ -47,6 +52,31 @@ class BindingAdapters {
             }
 
             view.text = jobSkillsStr
+        }
+
+        @JvmStatic
+        @BindingAdapter("imgUrl")
+        fun loadImage(view: ImageView, imgUrl: String?) {
+            if(imgUrl?.isNotEmpty() == true) {
+                Picasso.get().load(imgUrl).into(view)
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("jobSchedule")
+        fun jobScheduleStr(view: TextView, schedules: List<WorkingTime>?) {
+            var scheduleStr = ""
+            schedules?.let {
+                val scheduleMap = schedules.groupBy { it.listTime }
+
+                for(item in scheduleMap) {
+                    val daysStr = item.value.joinToString { DayInWeek.fromIndex(it.day).shortName }
+                    val timesStr = item.key.joinToString { it }
+                    scheduleStr += "\t - $daysStr : $timesStr \n\n"
+                }
+            }
+
+            view.text = scheduleStr.dropLast(2) //remove 2 last /n/n characters
         }
     }
 }
