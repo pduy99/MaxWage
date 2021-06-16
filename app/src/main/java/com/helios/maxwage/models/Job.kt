@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
 data class Job(
     @SerializedName("isFlexible") val isFlexible: Boolean,
     @SerializedName("description") val description: String,
-    @SerializedName("schedule") val schedule : List<WorkingTime>,
+    @SerializedName("schedule") val schedule: List<WorkingTime>,
     @SerializedName("skills") val skills: List<String>,
     @SerializedName("_id") val _id: String,
     @SerializedName("name") val name: String,

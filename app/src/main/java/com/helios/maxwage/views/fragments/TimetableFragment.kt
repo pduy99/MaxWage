@@ -2,6 +2,7 @@ package com.helios.maxwage.views.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,11 +57,6 @@ class TimetableFragment : BaseFragment() {
         return binding.root
     }
 
-    override fun onPause() {
-        super.onPause()
-        SharedPrefs.savedJobSchedule = binding.timetable.createSaveData()
-    }
-
     private fun observeLiveData() {
         viewModel.schedule.observe(viewLifecycleOwner, {
             when (it.status) {
@@ -74,6 +70,7 @@ class TimetableFragment : BaseFragment() {
                         "Create schedule completed",
                         "We have created a job schedule for you with maximum salary: $totalSalary"
                     ) {
+                        SharedPrefs.savedJobSchedule = it.data
                         showJobSchedule(it.data)
                     }
                 }
@@ -90,7 +87,7 @@ class TimetableFragment : BaseFragment() {
 
     private fun loadSaveSchedule() {
         SharedPrefs.savedJobSchedule?.let {
-            binding.timetable.load(it)
+            binding.timetable.add(it)
         }
     }
 
@@ -102,14 +99,18 @@ class TimetableFragment : BaseFragment() {
         (activity as MainActivity).showFab()
 
         with(binding) {
-            timetable.setOnStickerSelectEventListener { idx, schedules ->
-                val jobId = schedules[idx].jobId
+            timetable.setOnStickerSelectEventListener { index, schedules ->
+                try {
+                    val jobId = schedules[index].jobId
 
-                parentFragmentManager.replace(
-                    JobDetailFragment.newInstance(jobId),
-                    container = R.id.host_fragment,
-                    allowAddToBackStack = true
-                )
+                    parentFragmentManager.replace(
+                        JobDetailFragment.newInstance(jobId),
+                        container = R.id.host_fragment,
+                        allowAddToBackStack = true
+                    )
+                } catch (ex: Exception) {
+                    Log.d(TAG, ex.printStackTrace().toString())
+                }
             }
         }
     }

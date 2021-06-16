@@ -9,8 +9,8 @@ import com.helios.maxwage.sharepreferences.SharedPrefs
  */
 object JWTUtils {
     fun checkExpired(): Boolean {
-        SharedPrefs.accessToken?.let {
-            val jwt = JWT(it)
+        if (SharedPrefs.accessToken.isNotEmpty()) {
+            val jwt = JWT(SharedPrefs.accessToken)
             return jwt.isExpired(0)
         }
         return true

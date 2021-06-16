@@ -2,6 +2,9 @@ package com.helios.maxwage.sharepreferences
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.github.tlaabs.timetableview.Schedule
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.helios.maxwage.utils.Constants.SHARED_PREFERENCES_NAME
 
 /**
@@ -14,7 +17,7 @@ object SharedPrefs {
 
     private val ACCESS_TOKEN = Pair("access_token", String)
     private val SELECTED_FRAGMENT = Pair("selected_fragment", Int)
-    private val SAVED_JOB_SCHEDULE = Pair("saved_job_schedule", String)
+    private val SAVED_JOB_SCHEDULE = Pair("saved_job_schedule", arrayListOf<Schedule>())
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME, MODE)
@@ -48,13 +51,22 @@ object SharedPrefs {
             }
         }
 
-    var savedJobSchedule: String?
+    var savedJobSchedule: ArrayList<Schedule>?
         get() {
-            return preferences.getString(SAVED_JOB_SCHEDULE.first, null)
-        }
-        set(value) {
-            preferences.edit {
-                it.putString(SAVED_JOB_SCHEDULE.first, value)
+            return try {
+                val jsonString = preferences.getString(SAVED_JOB_SCHEDULE.first, null)
+                val turnsType = object : TypeToken<MutableList<Schedule>>() {}.type
+                GsonBuilder().create().fromJson(jsonString, turnsType)
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+                null
             }
         }
+        set(value) {
+            val jsonString = GsonBuilder().create().toJson(value)
+            preferences.edit {
+                it.putString(SAVED_JOB_SCHEDULE.first, jsonString)
+            }
+        }
+
 }

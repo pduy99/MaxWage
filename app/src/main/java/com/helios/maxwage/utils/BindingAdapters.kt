@@ -3,7 +3,6 @@ package com.helios.maxwage.utils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.github.tlaabs.timetableview.Schedule
 import com.helios.maxwage.models.DayInWeek
 import com.helios.maxwage.models.WorkingTime
 import com.squareup.picasso.Picasso
@@ -57,7 +56,7 @@ class BindingAdapters {
         @JvmStatic
         @BindingAdapter("imgUrl")
         fun loadImage(view: ImageView, imgUrl: String?) {
-            if(imgUrl?.isNotEmpty() == true) {
+            if (imgUrl?.isNotEmpty() == true) {
                 Picasso.get().load(imgUrl).into(view)
             }
         }
@@ -69,7 +68,7 @@ class BindingAdapters {
             schedules?.let {
                 val scheduleMap = schedules.groupBy { it.listTime }
 
-                for(item in scheduleMap) {
+                for (item in scheduleMap) {
                     val daysStr = item.value.joinToString { DayInWeek.fromIndex(it.day).shortName }
                     val timesStr = item.key.joinToString { it }
                     scheduleStr += "\t - $daysStr : $timesStr \n\n"

@@ -14,7 +14,6 @@ import com.helios.maxwage.databinding.FragmentJobDetailBinding
 import com.helios.maxwage.viewmodels.JobDetailViewModel
 import com.helios.maxwage.viewmodels.JobDetailViewModel.JobDetailViewModelFactory
 import com.helios.maxwage.views.base.BaseFragment
-import org.json.JSONObject
 
 private const val ARG_JOB_ID = "jobId"
 
@@ -71,7 +70,7 @@ class JobDetailFragment : BaseFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             android.R.id.home -> {
                 parentFragmentManager.popBackStack()
                 true

@@ -25,6 +25,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Set;
 
 public class TimetableView extends LinearLayout {
     private static final int DEFAULT_ROW_COUNT = 12;
@@ -159,7 +160,7 @@ public class TimetableView extends LinearLayout {
     }
 
     private void add(final ArrayList<Schedule> schedules, int specIdx) {
-        final int count = specIdx < 0 ? ++stickerCount : specIdx;
+        int count = specIdx < 0 ? ++stickerCount : specIdx;
         Sticker sticker = new Sticker();
         for (Schedule schedule : schedules) {
             TextView tv = new TextView(context);
@@ -172,11 +173,13 @@ public class TimetableView extends LinearLayout {
             tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_STICKER_FONT_SIZE_DP);
             tv.setTypeface(null, Typeface.BOLD);
 
+            final int finalCount = count;
             tv.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(stickerSelectedListener != null)
-                        stickerSelectedListener.OnStickerSelected(count, schedules);
+                    if(stickerSelectedListener != null){
+                        stickerSelectedListener.OnStickerSelected(finalCount, schedules);
+                    }
                 }
             });
 
@@ -184,6 +187,7 @@ public class TimetableView extends LinearLayout {
             sticker.addSchedule(schedule);
             stickers.put(count, sticker);
             stickerBox.addView(tv);
+            count = count + 1;
         }
         setStickerColor();
     }
@@ -227,7 +231,9 @@ public class TimetableView extends LinearLayout {
         removeAll();
         stickers = SaveManager.loadSticker(data);
         int maxKey = 0;
-        for (int key : stickers.keySet()) {
+        Set<Integer> tempKeySet = stickers.keySet();
+
+        for (int key : tempKeySet) {
             ArrayList<Schedule> schedules = stickers.get(key).getSchedules();
             add(schedules, key);
             if (maxKey < key) maxKey = key;
