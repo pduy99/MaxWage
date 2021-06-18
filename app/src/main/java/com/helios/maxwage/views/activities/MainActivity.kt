@@ -69,14 +69,14 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.menu_item_jobs -> {
-                val fragment = JobFragment.newInstance("", "")
+                val fragment = JobFragment.newInstance()
                 supportFragmentManager.replace(fragment, container = R.id.host_fragment)
 
                 true
             }
 
             R.id.menu_item_account -> {
-                val fragment = AccountFragment.newInstance("", "")
+                val fragment = AccountFragment.newInstance()
                 supportFragmentManager.replace(fragment, container = R.id.host_fragment)
 
                 true

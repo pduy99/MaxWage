@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.helios.maxwage.R
@@ -35,18 +34,12 @@ class JobFragment : BaseFragment() {
 
         initializeViewComponents()
         observeData()
-        fetchData()
 
         return binding.root
     }
 
-    private fun fetchData() {
-        viewModel.fetchJobs()
-        viewModel.fetchFavoriteJobs()
-    }
-
     private fun observeData() {
-        viewModel.jobs.observe(viewLifecycleOwner, Observer {
+        viewModel.jobs.observe(viewLifecycleOwner, {
             when (it.status) {
                 ApiStatus.LOADING -> {
                     Log.d(TAG, "Loading")
@@ -62,26 +55,26 @@ class JobFragment : BaseFragment() {
             }
         })
 
-        viewModel.favoriteJobs.observe(viewLifecycleOwner, Observer {
-            when (it.status) {
-                ApiStatus.LOADING -> {
-                    Log.d(TAG, "Loading")
-                }
-                ApiStatus.SUCCESS -> {
-                    adapter.listFavorite = it.data!!
-                    adapter.notifyDataSetChanged()
-                }
-                ApiStatus.ERROR -> {
-                    Log.d(TAG, "Error ${it.message}")
-                }
-            }
-        })
+//        viewModel.favoriteJobs.observe(viewLifecycleOwner, Observer {
+//            when (it.status) {
+//                ApiStatus.LOADING -> {
+//                    Log.d(TAG, "Loading")
+//                }
+//                ApiStatus.SUCCESS -> {
+//                    adapter.listFavorite = it.data!!
+//                    adapter.notifyDataSetChanged()
+//                }
+//                ApiStatus.ERROR -> {
+//                    Log.d(TAG, "Error ${it.message}")
+//                }
+//            }
+//        })
     }
 
     private fun initializeViewComponents() {
         (activity as MainActivity).hideFab()
         with(binding) {
-            adapter = ListJobAdapter(listOf(), listOf()).apply {
+            adapter = ListJobAdapter(listOf()).apply {
                 onClick = {
                     parentFragmentManager.replace(
                         JobDetailFragment.newInstance(it),
@@ -91,13 +84,17 @@ class JobFragment : BaseFragment() {
                 }
 
                 onAddFavoriteJob = { jobId ->
-                    viewModel.addFavoriteJob(jobId).observe(viewLifecycleOwner, Observer {
+                    viewModel.addFavoriteJob(jobId).observe(viewLifecycleOwner, {
                         when (it.status) {
                             ApiStatus.LOADING -> {
 
                             }
                             ApiStatus.SUCCESS -> {
-                                viewModel.fetchFavoriteJobs()
+                                val indexJob = adapter.jobs.indexOfFirst { job -> job._id == jobId }
+                                if(indexJob != -1) {
+                                    adapter.jobs[indexJob].isFavorite = true
+                                    adapter.notifyItemChanged(indexJob)
+                                }
                             }
                             ApiStatus.ERROR -> {
                                 Log.d(TAG, "${it.message}")
@@ -107,13 +104,17 @@ class JobFragment : BaseFragment() {
                 }
 
                 onRemoveFavoriteJob = { jobId ->
-                    viewModel.removeFavoriteJob(jobId).observe(viewLifecycleOwner, Observer {
+                    viewModel.removeFavoriteJob(jobId).observe(viewLifecycleOwner, {
                         when (it.status) {
                             ApiStatus.LOADING -> {
 
                             }
                             ApiStatus.SUCCESS -> {
-                                viewModel.fetchFavoriteJobs()
+                                val indexJob = adapter.jobs.indexOfFirst { job -> job._id == jobId }
+                                if(indexJob != -1) {
+                                    adapter.jobs[indexJob].isFavorite = false
+                                    adapter.notifyItemChanged(indexJob)
+                                }
                             }
                             ApiStatus.ERROR -> {
                                 Log.d(TAG, "${it.message}")
@@ -130,6 +131,6 @@ class JobFragment : BaseFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) = JobFragment()
+        fun newInstance() = JobFragment()
     }
 }

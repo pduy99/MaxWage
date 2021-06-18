@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso
 /**
  * Created by Helios on 4/18/2021.
  */
-class ListJobAdapter(var jobs: List<Job>, var listFavorite: List<String>) :
+class ListJobAdapter(var jobs: List<Job>) :
     RecyclerView.Adapter<ListJobAdapter.ViewHolder>() {
 
     inner class ViewHolder(var layout: ItemJobBinding) : RecyclerView.ViewHolder(layout.root) {
@@ -47,7 +47,7 @@ class ListJobAdapter(var jobs: List<Job>, var listFavorite: List<String>) :
             onClick?.invoke(job._id)
         }
         holder.layout.btnFavorite.setOnClickListener {
-            if (listFavorite.contains(job._id)) {
+            if(job.isFavorite) {
                 onRemoveFavoriteJob?.invoke(job._id)
             } else {
                 onAddFavoriteJob?.invoke(job._id)
@@ -58,11 +58,19 @@ class ListJobAdapter(var jobs: List<Job>, var listFavorite: List<String>) :
             holder.setupJobAvatar(job.avatar)
         }
 
-        if (listFavorite.contains(job._id)) {
+        if (job.isFavorite) {
             holder.layout.btnFavorite.setImageResource(R.drawable.ic_favorite_24)
         } else {
             holder.layout.btnFavorite.setImageResource(R.drawable.ic_favorite_border)
         }
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 
     override fun getItemCount(): Int {

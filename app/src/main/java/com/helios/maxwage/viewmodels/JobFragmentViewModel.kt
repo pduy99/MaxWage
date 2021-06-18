@@ -6,6 +6,8 @@ import com.helios.maxwage.models.Job
 import com.helios.maxwage.repositories.JobRepository
 import com.helios.maxwage.repositories.UserRepository
 import com.helios.maxwage.sharepreferences.SharedPrefs
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 /**
@@ -22,23 +24,42 @@ class JobFragmentViewModel : ViewModel() {
     private var jobRepository: JobRepository = JobRepository.getInstance()
     private var userRepository: UserRepository = UserRepository.getInstance()
 
-    fun fetchJobs() = viewModelScope.launch {
-        _jobs.postValue(Resource.loading(null))
-        _jobs.postValue(jobRepository.getAllJobs(SharedPrefs.accessToken!!))
+    init {
+        fetchAllJob()
     }
 
-    fun fetchFavoriteJobs() = viewModelScope.launch {
-        _favoriteJobs.postValue(Resource.loading(null))
-        _favoriteJobs.postValue(userRepository.getFavoriteJobs(SharedPrefs.accessToken!!))
+    private fun fetchAllJob() = viewModelScope.launch {
+        _jobs.postValue(Resource.loading(null))
+        val token = SharedPrefs.accessToken
+
+        try {
+            coroutineScope {
+                val jobsFromDeferred = async { jobRepository.getAllJobs(token) }
+                val favoriteJobFromDeferred = async { userRepository.getFavoriteJobs(token) }
+
+                val favoriteJobs = favoriteJobFromDeferred.await()
+                val jobs = jobsFromDeferred.await()
+
+                favoriteJobs.data?.forEach {  jobId ->
+                    jobs.data?.find { it._id == jobId }?.isFavorite = true
+                }
+
+                _jobs.postValue(jobs)
+                _favoriteJobs.postValue(favoriteJobs)
+            }
+        } catch (ex: Exception) {
+            _jobs.postValue(ex.message?.let { Resource.error(it) })
+        }
     }
+
 
     fun addFavoriteJob(jobId: String) = liveData {
         emit(Resource.loading(null))
-        emit(userRepository.addFavoriteJobs(SharedPrefs.accessToken!!, jobId))
+        emit(userRepository.addFavoriteJobs(SharedPrefs.accessToken, jobId))
     }
 
     fun removeFavoriteJob(jobId: String) = liveData {
         emit(Resource.loading(null))
-        emit(userRepository.removeFavoriteJobs(SharedPrefs.accessToken!!, jobId))
+        emit(userRepository.removeFavoriteJobs(SharedPrefs.accessToken, jobId))
     }
 }

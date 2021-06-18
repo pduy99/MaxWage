@@ -17,7 +17,9 @@ data class Job(
     @SerializedName("address") val address: String,
     @SerializedName("avatar") val avatar: String,
     @SerializedName("company") val company: String
-)
+) {
+    var isFavorite: Boolean = false
+}
 
 data class WorkingTime(
     @SerializedName("name") val day: Int,
