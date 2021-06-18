@@ -1,6 +1,9 @@
 package com.helios.maxwage.viewmodels
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.helios.maxwage.api.Resource
 import com.helios.maxwage.models.User
 import com.helios.maxwage.repositories.UserRepository
@@ -15,14 +18,10 @@ class AccountViewModel : ViewModel() {
 
     private val userRepository = UserRepository.getInstance()
 
-    private var _user : MutableLiveData<Resource<User>> = MutableLiveData()
-    val user : LiveData<Resource<User>> = _user
+    private var _user: MutableLiveData<Resource<User>> = MutableLiveData()
+    val user: LiveData<Resource<User>> = _user
 
-    init {
-        getMyProfile()
-    }
-
-    private fun getMyProfile() = viewModelScope.launch {
+    fun fetchMyProfile() = viewModelScope.launch {
         _user.postValue(Resource.loading(null))
         _user.postValue(userRepository.getMyProfile(SharedPrefs.accessToken))
     }

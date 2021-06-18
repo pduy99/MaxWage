@@ -77,5 +77,15 @@ class BindingAdapters {
 
             view.text = scheduleStr.dropLast(2) //remove 2 last /n/n characters
         }
+
+        @JvmStatic
+        @BindingAdapter("dateStr")
+        fun dateToString(view: TextView, date: Date?) {
+            date?.let {
+                val dateStr = date.toString("dd/MM/yyyy")
+
+                view.text = dateStr
+            }
+        }
     }
 }

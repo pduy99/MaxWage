@@ -5,6 +5,7 @@ import com.helios.maxwage.api.Resource
 import com.helios.maxwage.api.ResponseHandler
 import com.helios.maxwage.models.LoginResponse
 import com.helios.maxwage.models.User
+import java.util.*
 
 /**
  * Created by Helios on 4/27/2021.
@@ -27,7 +28,7 @@ class UserRepository(private val responseHandler: ResponseHandler) {
         }
     }
 
-    suspend fun getMyProfile(token: String) : Resource<User> {
+    suspend fun getMyProfile(token: String): Resource<User> {
         return try {
             responseHandler.handleSuccess(ApiFactory.instance.getMyProfile("Bearer $token"))
         } catch (ex: Exception) {
@@ -62,6 +63,51 @@ class UserRepository(private val responseHandler: ResponseHandler) {
                 ApiFactory.instance.removeFavoriteJobs(
                     "Bearer $token",
                     jobId
+                )
+            )
+        } catch (ex: Exception) {
+            responseHandler.handleException(ex)
+        }
+    }
+
+    suspend fun updateMyPhoneNumber(token: String, phoneNumber: String): Resource<Nothing> {
+        return try {
+            responseHandler.handleSuccess(
+                ApiFactory.instance.updateMyPhoneNumber(
+                    "Bearer $token",
+                    phoneNumber
+                )
+            )
+        } catch (ex: Exception) {
+            responseHandler.handleException(ex)
+        }
+    }
+
+    suspend fun updateMyBirthday(token: String, birthday: Date): Resource<Nothing> {
+        return try {
+            responseHandler.handleSuccess(
+                ApiFactory.instance.updateMyBirthday(
+                    "Bearer $token",
+                    birthday
+                )
+            )
+        } catch (ex: Exception) {
+            responseHandler.handleException(ex)
+        }
+    }
+
+    suspend fun updateMyAddress(
+        token: String,
+        city: String,
+        district: String,
+        ward: String,
+        houseNumber: String
+    ): Resource<Nothing> {
+        return try {
+            responseHandler.handleSuccess(
+                ApiFactory.instance.updateMyAddress(
+                    "Bearer $token",
+                    city, district, ward, houseNumber
                 )
             )
         } catch (ex: Exception) {

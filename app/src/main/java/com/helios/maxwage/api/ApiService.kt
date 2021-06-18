@@ -5,6 +5,7 @@ import com.helios.maxwage.models.JobSchedule
 import com.helios.maxwage.models.LoginResponse
 import com.helios.maxwage.models.User
 import retrofit2.http.*
+import java.util.*
 
 /**
  * Created by Helios on 4/9/2021.
@@ -44,6 +45,30 @@ interface ApiService {
         @Header("Authorization") accessToken: String,
         @Path("jobId") jobId: String
     ): ApiResponse<Boolean>
+
+    @FormUrlEncoded
+    @PUT("users/me/phone")
+    suspend fun updateMyPhoneNumber(
+        @Header("Authorization") accessToken: String,
+        @Field("phoneNumber") phoneNumber: String
+    ): ApiResponse<Nothing>
+
+    @FormUrlEncoded
+    @PUT("users/me/dob")
+    suspend fun updateMyBirthday(
+        @Header("Authorization") accessToken: String,
+        @Field("birthday") birthday: Date
+    ): ApiResponse<Nothing>
+
+    @FormUrlEncoded
+    @PUT("users/me/address")
+    suspend fun updateMyAddress(
+        @Header("Authorization") accessToken: String,
+        @Field("city") birthday: String,
+        @Field("district") district: String,
+        @Field("ward") ware: String,
+        @Field("houseNumber") houseNumber: String,
+    ): ApiResponse<Nothing>
 
     /**
      * Jobs

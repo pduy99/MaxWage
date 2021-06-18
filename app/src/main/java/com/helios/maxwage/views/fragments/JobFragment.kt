@@ -91,7 +91,7 @@ class JobFragment : BaseFragment() {
                             }
                             ApiStatus.SUCCESS -> {
                                 val indexJob = adapter.jobs.indexOfFirst { job -> job._id == jobId }
-                                if(indexJob != -1) {
+                                if (indexJob != -1) {
                                     adapter.jobs[indexJob].isFavorite = true
                                     adapter.notifyItemChanged(indexJob)
                                 }
@@ -111,7 +111,7 @@ class JobFragment : BaseFragment() {
                             }
                             ApiStatus.SUCCESS -> {
                                 val indexJob = adapter.jobs.indexOfFirst { job -> job._id == jobId }
-                                if(indexJob != -1) {
+                                if (indexJob != -1) {
                                     adapter.jobs[indexJob].isFavorite = false
                                     adapter.notifyItemChanged(indexJob)
                                 }

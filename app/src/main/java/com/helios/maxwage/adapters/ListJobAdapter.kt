@@ -47,7 +47,7 @@ class ListJobAdapter(var jobs: List<Job>) :
             onClick?.invoke(job._id)
         }
         holder.layout.btnFavorite.setOnClickListener {
-            if(job.isFavorite) {
+            if (job.isFavorite) {
                 onRemoveFavoriteJob?.invoke(job._id)
             } else {
                 onAddFavoriteJob?.invoke(job._id)

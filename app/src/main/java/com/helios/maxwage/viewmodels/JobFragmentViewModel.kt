@@ -40,7 +40,7 @@ class JobFragmentViewModel : ViewModel() {
                 val favoriteJobs = favoriteJobFromDeferred.await()
                 val jobs = jobsFromDeferred.await()
 
-                favoriteJobs.data?.forEach {  jobId ->
+                favoriteJobs.data?.forEach { jobId ->
                     jobs.data?.find { it._id == jobId }?.isFavorite = true
                 }
 

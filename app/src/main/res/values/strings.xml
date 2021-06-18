@@ -50,6 +50,12 @@
     <string name="add_skills">Add Skills</string>
     <string name="update_your_skills_to_match_the_job_requirements">Update your skills to match the job requirements.</string>
     <string name="you_can_add_up_to_10_skills">You can add up to 10 skills</string>
+    <string name="recruiters_will_contact_you_via_this_phone_number">Recruiters will contact you via this phone number</string>
+    <string name="update">Update</string>
+    <string name="city">City</string>
+    <string name="district">District</string>
+    <string name="ward">Ward</string>
+    <string name="house_number_street_name">House number, street name</string>
 
     <string-array name="timetable_header">
         <item></item>
@@ -60,6 +66,38 @@
         <item>Fri</item>
         <item>Sat</item>
         <item>Sun</item>
+    </string-array>
+
+    <string-array name="support_City">
+        <item>Ho Chi Minh City</item>
+    </string-array>
+
+    <string-array name="HCMC_District">
+        <item>District 1</item>
+        <item>District 2</item>
+        <item>District 3</item>
+        <item>District 4</item>
+        <item>District 5</item>
+        <item>District 6</item>
+        <item>District 7</item>
+        <item>District 8</item>
+        <item>District 9</item>
+        <item>District 10</item>
+        <item>District 11</item>
+        <item>District 12</item>
+        <item>District 1</item>
+        <item>Binh Tan</item>
+        <item>Binh Thanh</item>
+        <item>Go Vap</item>
+        <item>Phu Nhuan</item>
+        <item>Tan Binh</item>
+        <item>Tan Phu</item>
+        <item>Thu Duc</item>
+        <item>Binh Chanh</item>
+        <item>Can Gio</item>
+        <item>Cu Chi</item>
+        <item>Hoc Mon</item>
+        <item>Nha Be</item>
     </string-array>
 
 </resources>
