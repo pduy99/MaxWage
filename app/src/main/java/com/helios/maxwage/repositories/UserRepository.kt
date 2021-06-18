@@ -4,6 +4,7 @@ import com.helios.maxwage.api.ApiFactory
 import com.helios.maxwage.api.Resource
 import com.helios.maxwage.api.ResponseHandler
 import com.helios.maxwage.models.LoginResponse
+import com.helios.maxwage.models.User
 
 /**
  * Created by Helios on 4/27/2021.
@@ -21,6 +22,14 @@ class UserRepository(private val responseHandler: ResponseHandler) {
     suspend fun login(email: String, password: String): Resource<LoginResponse> {
         return try {
             responseHandler.handleSuccess(ApiFactory.instance.login(email, password))
+        } catch (ex: Exception) {
+            responseHandler.handleException(ex)
+        }
+    }
+
+    suspend fun getMyProfile(token: String) : Resource<User> {
+        return try {
+            responseHandler.handleSuccess(ApiFactory.instance.getMyProfile("Bearer $token"))
         } catch (ex: Exception) {
             responseHandler.handleException(ex)
         }

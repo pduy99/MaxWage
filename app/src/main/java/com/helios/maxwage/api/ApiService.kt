@@ -3,6 +3,7 @@ package com.helios.maxwage.api
 import com.helios.maxwage.models.Job
 import com.helios.maxwage.models.JobSchedule
 import com.helios.maxwage.models.LoginResponse
+import com.helios.maxwage.models.User
 import retrofit2.http.*
 
 /**
@@ -24,6 +25,9 @@ interface ApiService {
     /**
      * User
      */
+
+    @GET("users/me")
+    suspend fun getMyProfile(@Header("Authorization") accessToken: String): ApiResponse<User>
 
     @GET("users/me/favorite-jobs")
     suspend fun getFavoriteJobs(@Header("Authorization") accessToken: String): ApiResponse<List<String>>

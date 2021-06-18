@@ -43,6 +43,13 @@
     <string name="skills_requirement">Skills requirement</string>
     <string name="job_description">Job Description</string>
     <string name="flexible_time_notification">This job is flexible, you can flexibly choose working days according to your free time</string>
+    <string name="current_address">Current address</string>
+    <string name="birthday">Birthday</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Phone number</string>
+    <string name="add_skills">Add Skills</string>
+    <string name="update_your_skills_to_match_the_job_requirements">Update your skills to match the job requirements.</string>
+    <string name="you_can_add_up_to_10_skills">You can add up to 10 skills</string>
 
     <string-array name="timetable_header">
         <item></item>

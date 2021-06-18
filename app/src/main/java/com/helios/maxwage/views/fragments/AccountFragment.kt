@@ -1,51 +1,76 @@
 package com.helios.maxwage.views.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.helios.maxwage.R
+import androidx.fragment.app.viewModels
+import com.helios.maxwage.api.ApiStatus
+import com.helios.maxwage.databinding.FragmentAccountBinding
+import com.helios.maxwage.viewmodels.AccountViewModel
+import com.helios.maxwage.views.activities.MainActivity
+import com.helios.maxwage.views.base.BaseFragment
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class AccountFragment : BaseFragment() {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AccountFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class AccountFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentAccountBinding
+    private val viewModel : AccountViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    override val TAG: String
+        get() = "AccountFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false)
+    ): View {
+
+        binding = FragmentAccountBinding.inflate(inflater, container, false)
+
+        initializeViewComponents()
+        observeLiveData()
+        return binding.root
+    }
+
+    private fun observeLiveData() {
+        viewModel.user.observe(viewLifecycleOwner, {
+            when(it.status) {
+                ApiStatus.LOADING -> {
+
+                }
+                ApiStatus.SUCCESS -> {
+                    binding.user = it.data
+                }
+                ApiStatus.ERROR -> {
+                    Log.d(TAG, "${it.message}")
+                }
+            }
+        })
+    }
+
+    private fun initializeViewComponents() {
+        (activity as MainActivity).hideFab()
+        with(binding){
+            edPhone.setOnClickListener {
+                //
+            }
+
+            edAddress.setOnClickListener {
+
+            }
+
+            edDOB.setOnClickListener {
+
+            }
+
+            btnAddSkill.setOnClickListener {
+
+            }
+        }
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AccountFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() = AccountFragment()
     }
 }
