@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="In App">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="language"
+            app:summary="English"
+            app:title="Language" />
+
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="onlyJobMatchAddress"
+            app:summary="If this is on, system will only create schedule based on jobs in your district (if provided)"
+            app:title="Jobs near me" />
+
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="onlyJobMatchSkills"
+            app:summary="If this is on, system will only create schedule based on jobs matching your skills (if provided)"
+            app:title="Jobs match my skills" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="Max Wage">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="version"
+            app:summary="1.0.0"
+            app:title="Version" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="sendFeedback"
+            app:summary="Have any issues ? We are happy to help!"
+            app:title="Send Feedback" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="faq"
+            app:summary="View frequently asked questions"
+            app:title="FAQ" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="about"
+            app:summary="This is a graduation thesis project of 2 K17 HCMUS students with id numbers 1712018 and 1712000"
+            app:title="About us" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="policy"
+            app:title="Privacy Policy" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="term"
+            app:title="Terms and conditions" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

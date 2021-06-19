@@ -101,4 +101,7 @@ dependencies {
     //Segment control
     implementation "com.github.addisonelliott:SegmentedButton:3.1.9"
 
+    // Preference
+    implementation 'androidx.preference:preference-ktx:1.1.1'
+
 }

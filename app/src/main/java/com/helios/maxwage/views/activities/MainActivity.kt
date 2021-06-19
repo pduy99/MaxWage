@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.menu_item_setting -> {
-                val fragment = SettingFragment.newInstance("", "")
+                val fragment = SettingFragment.newInstance()
                 supportFragmentManager.replace(fragment, container = R.id.host_fragment)
 
                 true

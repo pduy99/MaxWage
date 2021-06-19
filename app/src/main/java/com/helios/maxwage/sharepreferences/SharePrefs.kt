@@ -18,6 +18,8 @@ object SharedPrefs {
     private val ACCESS_TOKEN = Pair("access_token", String)
     private val SELECTED_FRAGMENT = Pair("selected_fragment", Int)
     private val SAVED_JOB_SCHEDULE = Pair("saved_job_schedule", arrayListOf<Schedule>())
+    private val ONLY_JOBS_MATCH_ADDRESS = Pair("jobs_match_address", Boolean)
+    private val ONLY_JOBS_MATCH_SKILLS = Pair("jobs_match_skills", Boolean)
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME, MODE)
@@ -66,6 +68,26 @@ object SharedPrefs {
             val jsonString = GsonBuilder().create().toJson(value)
             preferences.edit {
                 it.putString(SAVED_JOB_SCHEDULE.first, jsonString)
+            }
+        }
+
+    var onlyJobsMatchAddress: Boolean
+        get() {
+            return preferences.getBoolean(ONLY_JOBS_MATCH_ADDRESS.first, false)
+        }
+        set(value) {
+            preferences.edit {
+                it.putBoolean(ONLY_JOBS_MATCH_ADDRESS.first, value)
+            }
+        }
+
+    var onlyJobsMatchSkills: Boolean
+        get() {
+            return preferences.getBoolean(ONLY_JOBS_MATCH_SKILLS.first, false)
+        }
+        set(value) {
+            preferences.edit {
+                it.putBoolean(ONLY_JOBS_MATCH_SKILLS.first, value)
             }
         }
 
