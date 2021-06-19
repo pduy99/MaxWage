@@ -114,4 +114,17 @@ class UserRepository(private val responseHandler: ResponseHandler) {
             responseHandler.handleException(ex)
         }
     }
+
+    suspend fun updateMySkills(token: String, skills: List<String>): Resource<Nothing> {
+        return try {
+            responseHandler.handleSuccess(
+                ApiFactory.instance.updateMySkills(
+                    "Bearer $token",
+                    skills
+                )
+            )
+        } catch (ex: Exception) {
+            responseHandler.handleException(ex)
+        }
+    }
 }

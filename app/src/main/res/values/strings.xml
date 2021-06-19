@@ -35,7 +35,6 @@
     <string name="total_working_hour_message">I would like to work %1$d hours a week</string>
     <string name="maximum_working_hour_alert">You can only work maximum %1$d hours a week, current %2$d hours</string>
     <string name="apply_now">Apply now</string>
-    <string name="save">Save</string>
     <string name="logo_of_company">Logo of company</string>
     <string name="location">Location</string>
     <string name="wage">Wage</string>
@@ -56,6 +55,8 @@
     <string name="district">District</string>
     <string name="ward">Ward</string>
     <string name="house_number_street_name">House number, street name</string>
+    <string name="save">Save</string>
+    <string name="list_skills">List skills</string>
 
     <string-array name="timetable_header">
         <item></item>
@@ -98,6 +99,43 @@
         <item>Cu Chi</item>
         <item>Hoc Mon</item>
         <item>Nha Be</item>
+    </string-array>
+
+    <string-array name="skills">
+        <item>Bán hàng</item>
+        <item>Năng động</item>
+        <item>Chăm chỉ</item>
+        <item>Anh văn</item>
+        <item>Trung học phổ thông</item>
+        <item>Tạp vụ</item>
+        <item>Ham học hỏi</item>
+        <item>Trung cấp - nghề</item>
+        <item>Trách nhiệm</item>
+        <item>Khéo léo</item>
+        <item>Có phương tiện cá nhân</item>
+        <item>Trung thực</item>
+        <item>Tỉ mỉ</item>
+        <item>Cao đẳng</item>
+        <item>Thân thiện</item>
+        <item>Giữ xe</item>
+        <item>Bảo vệ</item>
+        <item>Kiểm kê hàng hóa</item>
+        <item>Sắp xếp hàng hóa</item>
+        <item>Đúng giờ</item>
+        <item>Tiếp thị</item>
+        <item>Giao tiếp</item>
+        <item>Thu ngân</item>
+        <item>Pha chế</item>
+        <item>Phục vụ</item>
+        <item>Ngoại hình</item>
+        <item>Cử nhân</item>
+        <item>Cử nhân Anh</item>
+        <item>MS Office</item>
+        <item>Trông trẻ</item>
+        <item>Máy tính cá nhân</item>
+        <item>Sư phạm</item>
+        <item>Tiếng nhật</item>
+        <item>Sinh viên</item>
     </string-array>
 
 </resources>

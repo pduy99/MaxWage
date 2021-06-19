@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
 import com.helios.maxwage.R
 import com.helios.maxwage.api.ApiStatus
@@ -13,6 +15,7 @@ import com.helios.maxwage.utils.replace
 import com.helios.maxwage.viewmodels.AccountViewModel
 import com.helios.maxwage.views.activities.MainActivity
 import com.helios.maxwage.views.base.BaseFragment
+import nl.bryanderidder.themedtogglebuttongroup.ThemedButton
 
 class AccountFragment : BaseFragment() {
 
@@ -47,12 +50,25 @@ class AccountFragment : BaseFragment() {
                 }
                 ApiStatus.SUCCESS -> {
                     binding.user = it.data
+                    setupSkillsGroup(it.data!!.skills)
                 }
                 ApiStatus.ERROR -> {
                     Log.d(TAG, "${it.message}")
                 }
             }
         })
+    }
+
+    private fun setupSkillsGroup(skills: List<String>) {
+        with(binding) {
+            skills.forEach { skill ->
+                val btn = ThemedButton(requireContext())
+                btn.text = skill
+                val layout = LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+                layout.setMargins(0, 10, 10, 10)
+                groupSkills.addView(btn, layout)
+            }
+        }
     }
 
     private fun initializeViewComponents() {
@@ -92,7 +108,15 @@ class AccountFragment : BaseFragment() {
             }
 
             btnAddSkill.setOnClickListener {
+                val user = viewModel.user.value?.data
 
+                user?.let {
+                    parentFragmentManager.replace(
+                        UpdateSkillsFragment.newInstance(user.skills),
+                        container = R.id.host_fragment,
+                        allowAddToBackStack = true
+                    )
+                }
             }
         }
     }

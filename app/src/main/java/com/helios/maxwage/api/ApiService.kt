@@ -70,6 +70,13 @@ interface ApiService {
         @Field("houseNumber") houseNumber: String,
     ): ApiResponse<Nothing>
 
+    @FormUrlEncoded
+    @PUT("users/me/skills")
+    suspend fun updateMySkills(
+        @Header("Authorization") accessToken: String,
+        @Field("skills") skills: List<String>,
+    ): ApiResponse<Nothing>
+
     /**
      * Jobs
      */

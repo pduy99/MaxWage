@@ -216,16 +216,22 @@
                         android:textSize="15sp"
                         android:visibility="@{user.skills.size() != 0 ? View.VISIBLE : View.GONE}" />
 
-                    <androidx.recyclerview.widget.RecyclerView
+                    <com.google.android.flexbox.FlexboxLayout
+                        android:id="@+id/groupSkills"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp" />
+                        android:layout_marginTop="15dp"
+                        android:visibility="@{user.skills.size() != 0 ? View.VISIBLE : View.GONE}"
+                        app:flexWrap="wrap">
+
+                    </com.google.android.flexbox.FlexboxLayout>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnAddSkill"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
                         android:insetTop="0dp"
                         android:insetBottom="0dp"
                         android:text="@string/add_skills"
