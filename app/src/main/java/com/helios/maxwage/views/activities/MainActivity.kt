@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             val item = binding.bottomNavigation.menu.getItem(0)
             onNavigationItemSelected(item)
         }
-
     }
 
     private fun initializeViewComponents() {

@@ -28,7 +28,7 @@ class TimeTableFragmentViewModel : ViewModel() {
     fun buildJobSchedule(jobSchedule: JobSchedule) = viewModelScope.launch {
         _schedule.postValue(Resource.loading(null))
 
-        val accessToken = SharedPrefs.accessToken!!
+        val accessToken = SharedPrefs.accessToken
         val schedules = JobScheduleUtils.mapJobScheduleToSchedules(jobSchedule)
         try {
             coroutineScope {

@@ -3,9 +3,9 @@ package com.helios.maxwage.utils
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.helios.maxwage.R
 import java.text.NumberFormat
@@ -129,7 +129,7 @@ fun String.standardizeCase(locale: Locale): String {
 
 // region EditText
 
-fun TextInputEditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
+fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             afterTextChanged.invoke(s.toString())
@@ -141,7 +141,7 @@ fun TextInputEditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     })
 }
 
-fun TextInputEditText.validate(
+fun EditText.validate(
     validator: (String) -> Boolean,
     messageError: String,
     onInvalid: () -> Unit = {},
@@ -180,7 +180,7 @@ fun <T : Number> T.toCurrencyFormat(): String {
     format.maximumFractionDigits = 0
     format.currency = Currency.getInstance("VND")
 
-    return format.format(this) + " Hourly"
+    return format.format(this)
 }
 
 // endregion
