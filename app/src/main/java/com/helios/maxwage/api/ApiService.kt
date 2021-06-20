@@ -82,7 +82,14 @@ interface ApiService {
      */
 
     @GET("jobs")
-    suspend fun getAllJobs(@Header("Authorization") accessToken: String): ApiResponse<List<Job>>
+    suspend fun getAllJobs(
+        @Header("Authorization") accessToken: String,
+        @Query("districts") listDistrict: List<String>,
+        @Query("minWage") minWage: Int,
+        @Query("selectedSkills") skills: List<String>,
+        @Query("matchMySkillsOnly") matchMySkillsOnly: Boolean,
+        @Query("myFavoriteJobsOnly") myFavoriteJobsOnly: Boolean
+    ): ApiResponse<List<Job>>
 
     @GET("jobs/{jobId}")
     suspend fun getJobById(

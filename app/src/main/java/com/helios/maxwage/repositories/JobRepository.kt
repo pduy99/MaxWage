@@ -18,9 +18,24 @@ class JobRepository(private val responseHandler: ResponseHandler) {
             }
     }
 
-    suspend fun getAllJobs(accessToken: String): Resource<List<Job>> {
+    suspend fun getAllJobs(
+        accessToken: String, selectedDistrict: List<String>,
+        minWage: Int,
+        selectedSkills: List<String>,
+        matchMySkillsOnly: Boolean,
+        myFavoriteJobsOnly: Boolean
+    ): Resource<List<Job>> {
         return try {
-            responseHandler.handleSuccess(ApiFactory.instance.getAllJobs("Bearer $accessToken"))
+            responseHandler.handleSuccess(
+                ApiFactory.instance.getAllJobs(
+                    "Bearer $accessToken",
+                    selectedDistrict,
+                    minWage,
+                    selectedSkills,
+                    matchMySkillsOnly,
+                    myFavoriteJobsOnly
+                )
+            )
         } catch (ex: Exception) {
             responseHandler.handleException(ex)
         }

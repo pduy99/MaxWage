@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.helios.maxwage.R
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -169,6 +170,17 @@ fun TextInputEditText.validate(
 fun Date.toString(format: String = "dd/MM/yyyy", locale: Locale = Locale.getDefault()): String {
     val formatter = SimpleDateFormat(format, locale)
     return formatter.format(this)
+}
+
+// endregion
+
+// region Number
+fun <T : Number> T.toCurrencyFormat(): String {
+    val format: NumberFormat = NumberFormat.getCurrencyInstance()
+    format.maximumFractionDigits = 0
+    format.currency = Currency.getInstance("VND")
+
+    return format.format(this) + " Hourly"
 }
 
 // endregion

@@ -2,18 +2,30 @@ package com.helios.maxwage.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.helios.maxwage.R
 import com.helios.maxwage.databinding.ItemJobBinding
 import com.helios.maxwage.models.Job
 import com.squareup.picasso.Picasso
+import java.util.*
 
 /**
  * Created by Helios on 4/18/2021.
  */
-class ListJobAdapter(var jobs: List<Job>) :
-    RecyclerView.Adapter<ListJobAdapter.ViewHolder>() {
+class ListJobAdapter(private var jobs: List<Job>) :
+    RecyclerView.Adapter<ListJobAdapter.ViewHolder>(), Filterable {
+
+    fun setData(jobs: List<Job>) {
+        this.jobs = jobs
+        notifyDataSetChanged()
+    }
+
+    fun getData(): List<Job> = searchedJobs
+
+    private var searchedJobs = jobs.toMutableList()
 
     inner class ViewHolder(var layout: ItemJobBinding) : RecyclerView.ViewHolder(layout.root) {
 
@@ -40,7 +52,7 @@ class ListJobAdapter(var jobs: List<Job>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val job = jobs[position]
+        val job = searchedJobs[position]
 
         holder.layout.job = job
         holder.layout.root.setOnClickListener {
@@ -74,6 +86,35 @@ class ListJobAdapter(var jobs: List<Job>) :
     }
 
     override fun getItemCount(): Int {
-        return jobs.size
+        return searchedJobs.size
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                var filteredJobs = arrayListOf<Job>()
+
+                if (constraint.isNullOrEmpty()) {
+                    filteredJobs.addAll(jobs)
+                } else {
+                    val strPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim()
+                    filteredJobs = jobs.filter {
+                        it.name.toLowerCase(Locale.getDefault()).contains(strPattern)
+                    } as ArrayList<Job>
+                }
+
+                val filterResult = FilterResults()
+                filterResult.values = filteredJobs
+                return filterResult
+            }
+
+            override fun publishResults(p0: CharSequence?, result: FilterResults?) {
+                searchedJobs.clear()
+                searchedJobs.addAll(result!!.values as ArrayList<Job>)
+                notifyDataSetChanged()
+            }
+
+        }
     }
 }

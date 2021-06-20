@@ -47,12 +47,13 @@ abstract class BaseBottomSheetFragment : BottomSheetDialogFragment() {
                     behavior.addBottomSheetCallback(object :
                         BottomSheetBehavior.BottomSheetCallback() {
                         override fun onStateChanged(bottomSheet: View, newState: Int) {
-                            if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                                //In the EXPANDED STATE apply a new MaterialShapeDrawable with rounded corner
-                                val newMaterialShapeDrawable: MaterialShapeDrawable =
-                                    createMaterialShapeDrawable(bottomSheet)
-                                ViewCompat.setBackground(bottomSheet, newMaterialShapeDrawable)
-                            }
+//                            if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+//                                //In the EXPANDED STATE apply a new MaterialShapeDrawable with rounded corner
+//
+//                            }
+                            val newMaterialShapeDrawable: MaterialShapeDrawable =
+                                createMaterialShapeDrawable(bottomSheet)
+                            ViewCompat.setBackground(bottomSheet, newMaterialShapeDrawable)
                         }
 
                         override fun onSlide(bottomSheet: View, slideOffset: Float) {

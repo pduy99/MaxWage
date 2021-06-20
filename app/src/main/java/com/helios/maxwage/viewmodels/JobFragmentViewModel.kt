@@ -28,13 +28,28 @@ class JobFragmentViewModel : ViewModel() {
         fetchAllJob()
     }
 
-    private fun fetchAllJob() = viewModelScope.launch {
+    fun fetchAllJob(
+        selectedDistrict: List<String> = listOf(),
+        minWage: Int = 0,
+        selectedSkills: List<String> = listOf(),
+        matchMySkillsOnly: Boolean = false,
+        myFavoriteJobsOnly: Boolean = false
+    ) = viewModelScope.launch {
         _jobs.postValue(Resource.loading(null))
         val token = SharedPrefs.accessToken
 
         try {
             coroutineScope {
-                val jobsFromDeferred = async { jobRepository.getAllJobs(token) }
+                val jobsFromDeferred = async {
+                    jobRepository.getAllJobs(
+                        token,
+                        selectedDistrict,
+                        minWage,
+                        selectedSkills,
+                        matchMySkillsOnly,
+                        myFavoriteJobsOnly
+                    )
+                }
                 val favoriteJobFromDeferred = async { userRepository.getFavoriteJobs(token) }
 
                 val favoriteJobs = favoriteJobFromDeferred.await()
