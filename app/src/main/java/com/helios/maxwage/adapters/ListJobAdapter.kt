@@ -36,7 +36,7 @@ class ListJobAdapter(private var jobs: List<Job>) :
         }
     }
 
-    var onClick: ((String) -> Unit)? = null
+    var onClick: ((jobId: String, isFavorite: Boolean) -> Unit)? = null
     var onAddFavoriteJob: ((String) -> Unit)? = null
     var onRemoveFavoriteJob: ((String) -> Unit)? = null
 
@@ -56,7 +56,7 @@ class ListJobAdapter(private var jobs: List<Job>) :
 
         holder.layout.job = job
         holder.layout.root.setOnClickListener {
-            onClick?.invoke(job._id)
+            onClick?.invoke(job._id, job.isFavorite)
         }
         holder.layout.btnFavorite.setOnClickListener {
             if (job.isFavorite) {

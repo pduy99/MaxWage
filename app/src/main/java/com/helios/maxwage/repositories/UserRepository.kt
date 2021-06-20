@@ -28,6 +28,26 @@ class UserRepository(private val responseHandler: ResponseHandler) {
         }
     }
 
+    suspend fun register(
+        fullName: String,
+        phone: String,
+        email: String,
+        password: String
+    ): Resource<Nothing> {
+        return try {
+            responseHandler.handleSuccess(
+                ApiFactory.instance.register(
+                    fullName,
+                    phone,
+                    email,
+                    password
+                )
+            )
+        } catch (ex: Exception) {
+            responseHandler.handleException(ex)
+        }
+    }
+
     suspend fun getMyProfile(token: String): Resource<User> {
         return try {
             responseHandler.handleSuccess(ApiFactory.instance.getMyProfile("Bearer $token"))

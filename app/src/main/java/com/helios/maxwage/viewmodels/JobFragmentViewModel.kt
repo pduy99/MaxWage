@@ -24,10 +24,6 @@ class JobFragmentViewModel : ViewModel() {
     private var jobRepository: JobRepository = JobRepository.getInstance()
     private var userRepository: UserRepository = UserRepository.getInstance()
 
-    init {
-        fetchAllJob()
-    }
-
     fun fetchAllJob(
         selectedDistrict: List<String> = listOf(),
         minWage: Int = 0,

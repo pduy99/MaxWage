@@ -1,5 +1,6 @@
 package com.helios.maxwage.views.base
 
+import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.helios.maxwage.utils.UserNotificationHelper
@@ -61,6 +62,30 @@ abstract class BaseFragment : Fragment() {
     fun showMessageDialog(title: String, message: String, actionOnDone: () -> Unit = {}) {
         activity?.run {
             UserNotificationHelper.showMessageDialog(this, title, message, actionOnDone)
+        }
+    }
+
+    fun showConfirmDialog(
+        context: Context,
+        title: String,
+        message: String,
+        positiveText: String = "OK",
+        negativeText: String = "CANCEL",
+        actionOnCancel: () -> Unit = {},
+        actionOnAgree: () -> Unit = {},
+        cancelable: Boolean = false
+    ) {
+        activity?.run {
+            UserNotificationHelper.showConfirmDialog(
+                context,
+                title,
+                message,
+                positiveText,
+                negativeText,
+                actionOnCancel,
+                actionOnAgree,
+                cancelable
+            )
         }
     }
 

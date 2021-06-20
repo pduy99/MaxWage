@@ -47,10 +47,21 @@ class JobFragment : BaseFragment() {
         viewModel = ViewModelProvider(this).get(JobFragmentViewModel::class.java)
 
         initializeViewComponents()
+        fetchJobs()
         setupToolbar()
         observeData()
 
         return binding.root
+    }
+
+    private fun fetchJobs() {
+        viewModel.fetchAllJob(
+            _selectedDistrict,
+            _minWage,
+            _selectedSkills,
+            _matchMySkillsOnly,
+            _myFavoriteJobsOnly
+        )
     }
 
     private fun setupToolbar() {
@@ -80,13 +91,7 @@ class JobFragment : BaseFragment() {
         (activity as MainActivity).hideFab()
         with(binding) {
             swiperefresh.setOnRefreshListener {
-                viewModel.fetchAllJob(
-                    _selectedDistrict,
-                    _minWage,
-                    _selectedSkills,
-                    _matchMySkillsOnly,
-                    _myFavoriteJobsOnly
-                )
+                fetchJobs()
             }
         }
     }
@@ -97,9 +102,9 @@ class JobFragment : BaseFragment() {
             val jobAdapterObserver = JobAdapterObserver()
             registerAdapterDataObserver(jobAdapterObserver)
 
-            onClick = {
+            onClick = { jobId, isFavorite ->
                 parentFragmentManager.replace(
-                    JobDetailFragment.newInstance(it),
+                    JobDetailFragment.newInstance(jobId, isFavorite),
                     container = R.id.host_fragment,
                     allowAddToBackStack = true
                 )
