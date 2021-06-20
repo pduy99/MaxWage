@@ -160,7 +160,7 @@ public class TimetableView extends LinearLayout {
     }
 
     private void add(final ArrayList<Schedule> schedules, int specIdx) {
-        int count = specIdx < 0 ? ++stickerCount : specIdx;
+        int count = 0;
         Sticker sticker = new Sticker();
         for (Schedule schedule : schedules) {
             TextView tv = new TextView(context);
