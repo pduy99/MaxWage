@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -39,10 +38,12 @@
                     android:layout_marginTop="20dp">
 
                     <EditText
+                        android:id="@+id/edFullName"
                         style="@style/modifiedEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/name"
+                        android:autofillHints="fullName"
+                        android:hint="@string/fullname"
                         android:inputType="text"
                         android:maxLines="1"
                         android:textSize="12sp" />
@@ -55,11 +56,13 @@
                     android:layout_marginTop="20dp">
 
                     <EditText
+                        android:id="@+id/edPhone"
                         style="@style/modifiedEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:autofillHints="phoneNumber"
                         android:hint="@string/mobile_number"
-                        android:inputType="text"
+                        android:inputType="phone"
                         android:maxLines="1"
                         android:textSize="12sp" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -70,11 +73,13 @@
                     android:layout_marginTop="20dp">
 
                     <EditText
+                        android:id="@+id/edEmail"
                         style="@style/modifiedEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:autofillHints="emailAddress"
                         android:hint="@string/login_email_hint"
-                        android:inputType="text"
+                        android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:textSize="12sp" />
 
@@ -86,9 +91,11 @@
                     android:layout_marginTop="20dp">
 
                     <EditText
+                        android:id="@+id/edPassword"
                         style="@style/modifiedEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:autofillHints="password"
                         android:hint="@string/login_password_hint"
                         android:inputType="textPassword"
                         android:maxLines="1"
@@ -96,12 +103,14 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
-                    android:id="@+id/btn_login"
+                    android:id="@+id/btnRegister"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/bg_login_button"
+                    android:backgroundTint="@color/color_state_materialbutton"
+                    android:enabled="true"
                     android:text="@string/register"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
