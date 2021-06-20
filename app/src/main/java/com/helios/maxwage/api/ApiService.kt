@@ -23,6 +23,15 @@ interface ApiService {
         @Field("password") password: String
     ): ApiResponse<LoginResponse>
 
+    @FormUrlEncoded
+    @POST("auth/register")
+    suspend fun register(
+        @Field("name") fullName: String,
+        @Field("phone") phone: String,
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): ApiResponse<Nothing>
+
     /**
      * User
      */
@@ -105,7 +114,9 @@ interface ApiService {
     suspend fun scheduleJob(
         @Header("Authorization") accessToken: String,
         @Query("onlyFavoriteJob") onlyFavoriteJob: Boolean,
-        @Query("freeTime") freeTime: Array<MutableList<String>>
+        @Query("freeTime") freeTime: Array<MutableList<String>>,
+        @Query("matchSkills") matchSkills: Boolean,
+        @Query("matchAddress") matchAddress: Boolean,
     ): ApiResponse<JobSchedule>
 
 }

@@ -29,9 +29,11 @@ class SetTimeAvailableViewModel : ViewModel() {
             emit(Resource.loading(null))
             emit(
                 serviceRepository.scheduleJob(
-                    SharedPrefs.accessToken!!,
+                    SharedPrefs.accessToken,
                     freeTime,
-                    onlyFavoriteJob
+                    onlyFavoriteJob,
+                    SharedPrefs.onlyJobsMatchSkills,
+                    SharedPrefs.onlyJobsMatchAddress
                 )
             )
         }

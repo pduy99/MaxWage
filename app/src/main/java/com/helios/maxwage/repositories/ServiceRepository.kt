@@ -22,14 +22,18 @@ class ServiceRepository(private val responseHandler: ResponseHandler) {
     suspend fun scheduleJob(
         token: String,
         freeTime: Array<MutableList<String>>,
-        isOnlyFavoriteJob: Boolean
+        isOnlyFavoriteJob: Boolean,
+        matchSkills: Boolean,
+        matchAddress: Boolean
     ): Resource<JobSchedule> {
         return try {
             responseHandler.handleSuccess(
                 ApiFactory.instance.scheduleJob(
                     "Bearer $token",
                     isOnlyFavoriteJob,
-                    freeTime
+                    freeTime,
+                    matchSkills,
+                    matchAddress
                 )
             )
         } catch (ex: Exception) {
