@@ -1,10 +1,10 @@
 package com.helios.maxwage.views.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
@@ -13,10 +13,15 @@ import com.helios.maxwage.R
 import com.helios.maxwage.databinding.FragmentSettingBinding
 import com.helios.maxwage.sharepreferences.SharedPrefs
 import com.helios.maxwage.utils.replace
+import com.helios.maxwage.views.activities.LoginActivity
+import com.helios.maxwage.views.activities.MainActivity
+import com.helios.maxwage.views.base.BaseFragment
 
-class SettingFragment : Fragment() {
+class SettingFragment : BaseFragment() {
 
     private lateinit var binding: FragmentSettingBinding
+    override val TAG: String
+        get() = "SettingFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +37,7 @@ class SettingFragment : Fragment() {
 
     private fun initializeViewComponents() {
         childFragmentManager.replace(SettingPreference(), container = R.id.framelayout_setting)
+        (activity as MainActivity).hideFab()
     }
 
     companion object {
@@ -81,6 +87,15 @@ class SettingFragment : Fragment() {
                     onlyJobsMatchAddressPref?.isChecked = SharedPrefs.onlyJobsMatchAddress
                     true
                 }
+            }
+
+            findPreference<Preference>("logout")?.setOnPreferenceClickListener {
+                SharedPrefs.accessToken = ""
+                Intent(requireContext(), LoginActivity::class.java).apply {
+                    startActivity(this)
+                    activity?.finish()
+                }
+                true
             }
         }
     }
