@@ -216,7 +216,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_marginTop="20dp"
-                    android:background="@color/color_state_materialbutton"
+                    android:drawable="@color/color_state_materialbutton"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     android:text="@string/apply_filter"
