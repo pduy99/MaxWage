@@ -47,7 +47,7 @@
                 android:layout_weight="1"
                 android:padding="8dp"
                 app:selectedTextColor="@color/white"
-                app:text="Work Shift"
+                app:text="Day Session"
                 app:textColor="@color/black"
                 app:textSize="15sp" />
 

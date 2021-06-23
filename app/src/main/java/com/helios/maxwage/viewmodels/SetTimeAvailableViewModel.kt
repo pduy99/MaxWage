@@ -37,8 +37,4 @@ class SetTimeAvailableViewModel : ViewModel() {
                 )
             )
         }
-
-    companion object {
-        const val MAX_SELECTED_TIME = 63
-    }
 }

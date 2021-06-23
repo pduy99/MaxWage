@@ -19,9 +19,9 @@ object JWTUtils {
     fun parseId(): String? {
         return try {
             val token = SharedPrefs.accessToken
-            val jwt = token?.let { JWT(it) }
-            val subscriptionMetaData: Claim? = jwt?.getClaim("_id")
-            subscriptionMetaData?.asString()!!
+            val jwt = token.let { JWT(it) }
+            val subscriptionMetaData: Claim = jwt.getClaim("_id")
+            subscriptionMetaData.asString()!!
         } catch (ex: Exception) {
             null
         }

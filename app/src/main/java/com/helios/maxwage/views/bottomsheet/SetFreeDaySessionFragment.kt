@@ -7,19 +7,19 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.helios.maxwage.R
-import com.helios.maxwage.databinding.FragmentSetFreeWorkShiftBinding
+import com.helios.maxwage.databinding.FragmentSetFreeDaySessionBinding
 import com.helios.maxwage.interfaces.IButtonScheduleClick
 import com.helios.maxwage.models.FirstWorkingSift
 import com.helios.maxwage.models.SecondWorkingSift
 import com.helios.maxwage.models.ThirdWorkingSift
 import com.helios.maxwage.utils.Constants.MAX_WORKING_TIME
-import com.helios.maxwage.viewmodels.SetFreeWorkShiftViewModel
+import com.helios.maxwage.viewmodels.SetFreeDaySessionViewModel
 import com.helios.maxwage.views.base.BaseFragment
 
-class SetFreeWorkShiftFragment(var listener: IButtonScheduleClick) : BaseFragment() {
+class SetFreeDaySessionFragment(var listener: IButtonScheduleClick) : BaseFragment() {
 
-    private lateinit var binding: FragmentSetFreeWorkShiftBinding
-    private val viewModel: SetFreeWorkShiftViewModel by viewModels()
+    private lateinit var binding: FragmentSetFreeDaySessionBinding
+    private val viewModel: SetFreeDaySessionViewModel by viewModels()
 
     override val TAG: String
         get() = "WorkShiftFragment"
@@ -28,7 +28,7 @@ class SetFreeWorkShiftFragment(var listener: IButtonScheduleClick) : BaseFragmen
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSetFreeWorkShiftBinding.inflate(inflater, container, false)
+        binding = FragmentSetFreeDaySessionBinding.inflate(inflater, container, false)
 
         initializeViewComponents()
         onAvailableTimeSelected()
@@ -90,9 +90,8 @@ class SetFreeWorkShiftFragment(var listener: IButtonScheduleClick) : BaseFragmen
             val totalHour = viewModel.selectedWorkingShift.count { it }
             if (totalHour > MAX_WORKING_TIME) {
                 tvTotalHour.text =
-                    getString(R.string.maximum_working_hour_alert, MAX_WORKING_TIME, totalHour)
+                    getString(R.string.recommended_working_hour_alert, MAX_WORKING_TIME, totalHour)
                 tvTotalHour.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
-                btnScheduleJob.isEnabled = false
             } else {
                 tvTotalHour.text = getString(R.string.total_working_hour_message, totalHour)
                 tvTotalHour.setTextColor(
@@ -101,15 +100,13 @@ class SetFreeWorkShiftFragment(var listener: IButtonScheduleClick) : BaseFragmen
                         R.color.colorAccent
                     )
                 )
-                btnScheduleJob.isEnabled = true
             }
-
         }
     }
 
     companion object {
         @JvmStatic
         fun newInstance(listener: IButtonScheduleClick) =
-            SetFreeWorkShiftFragment(listener)
+            SetFreeDaySessionFragment(listener)
     }
 }

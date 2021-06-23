@@ -28,8 +28,8 @@ class SetTimeAvailableBottomSheet private constructor() : BaseBottomSheetFragmen
     private val freeTimeFragment: SetFreeTimeFragment by lazy {
         SetFreeTimeFragment.newInstance(this)
     }
-    private val workShiftFragment: SetFreeWorkShiftFragment by lazy {
-        SetFreeWorkShiftFragment.newInstance(this)
+    private val daySessionFragment: SetFreeDaySessionFragment by lazy {
+        SetFreeDaySessionFragment.newInstance(this)
     }
 
     var onNewSchedule: ((JobSchedule) -> Unit)? = null
@@ -44,7 +44,7 @@ class SetTimeAvailableBottomSheet private constructor() : BaseBottomSheetFragmen
     ): View {
         binding = LayoutSetTimeAvailabilityBinding.inflate(inflater, container, false)
 
-        childFragmentManager.replace(workShiftFragment, container = R.id.frameLayoutContent)
+        childFragmentManager.replace(daySessionFragment, container = R.id.frameLayoutContent)
         initData()
         initializeViewComponents()
 
@@ -60,7 +60,7 @@ class SetTimeAvailableBottomSheet private constructor() : BaseBottomSheetFragmen
             segmentGroupFreeTime.setOnPositionChangedListener { newPosition ->
                 if (newPosition == 0) {
                     childFragmentManager.replace(
-                        workShiftFragment,
+                        daySessionFragment,
                         container = R.id.frameLayoutContent,
                         allowAddToBackStack = true
                     )

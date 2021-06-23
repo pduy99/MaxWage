@@ -96,11 +96,10 @@ class SetFreeTimeFragment(val listener: IButtonScheduleClick) : BaseFragment() {
             val totalHour = viewModel.selectedFreeTime.count { it }
             if (totalHour > Constants.MAX_WORKING_TIME) {
                 tvTotalHour.text = getString(
-                    R.string.maximum_working_hour_alert,
+                    R.string.recommended_working_hour_alert,
                     Constants.MAX_WORKING_TIME, totalHour
                 )
                 tvTotalHour.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
-                btnScheduleJob.isEnabled = false
             } else {
                 tvTotalHour.text = getString(R.string.total_working_hour_message, totalHour)
                 tvTotalHour.setTextColor(
@@ -109,7 +108,6 @@ class SetFreeTimeFragment(val listener: IButtonScheduleClick) : BaseFragment() {
                         R.color.colorAccent
                     )
                 )
-                btnScheduleJob.isEnabled = true
             }
         }
     }

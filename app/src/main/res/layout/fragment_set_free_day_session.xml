@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".views.bottomsheet.SetFreeWorkShiftFragment">
+    tools:context=".views.bottomsheet.SetFreeDaySessionFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -233,6 +233,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:backgroundTint="@color/color_state_materialbutton"
+            android:enabled="true"
             android:text="@string/schedule_job"
             android:textColor="@color/white" />
 

@@ -24,7 +24,7 @@ class JobDetailViewModel(jobId: String) : ViewModel() {
     }
 
     private fun getJobById(jobId: String) = viewModelScope.launch {
-        val token = SharedPrefs.accessToken!!
+        val token = SharedPrefs.accessToken
         _job.postValue(jobRepository.getJobById(token, jobId))
     }
 
@@ -38,6 +38,7 @@ class JobDetailViewModel(jobId: String) : ViewModel() {
         emit(userRepository.removeFavoriteJobs(SharedPrefs.accessToken, jobId))
     }
 
+    @Suppress("UNCHECKED_CAST")
     class JobDetailViewModelFactory(private val jobId: String) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(JobDetailViewModel::class.java)) {

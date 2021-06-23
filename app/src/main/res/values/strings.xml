@@ -33,7 +33,7 @@
     <string name="set">Set</string>
     <string name="cancel">Cancel</string>
     <string name="total_working_hour_message">I would like to work %1$d hours a week</string>
-    <string name="maximum_working_hour_alert">You can only work maximum %1$d hours a week, current %2$d hours</string>
+    <string name="recommended_working_hour_alert">We recommend that you should work %1$d hours a week, current %2$d hours</string>
     <string name="apply_now">Apply now</string>
     <string name="logo_of_company">Logo of company</string>
     <string name="location">Location</string>
