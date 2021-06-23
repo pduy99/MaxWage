@@ -1,60 +1,128 @@
 package com.helios.maxwage.views.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.LinearLayout
+import androidx.fragment.app.viewModels
 import com.helios.maxwage.R
+import com.helios.maxwage.api.ApiStatus
+import com.helios.maxwage.databinding.FragmentAccountBinding
+import com.helios.maxwage.utils.replace
+import com.helios.maxwage.viewmodels.AccountViewModel
+import com.helios.maxwage.views.activities.MainActivity
+import com.helios.maxwage.views.base.BaseFragment
+import nl.bryanderidder.themedtogglebuttongroup.ThemedButton
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class AccountFragment : BaseFragment() {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AccountFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class AccountFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentAccountBinding
+    private val viewModel: AccountViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    override val TAG: String
+        get() = "AccountFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false)
+    ): View {
+        Log.d(TAG, "onCreateView")
+        binding = FragmentAccountBinding.inflate(inflater, container, false)
+
+        initializeViewComponents()
+        fetchMyProfile()
+        observeLiveData()
+        return binding.root
+    }
+
+    private fun fetchMyProfile() {
+        viewModel.fetchMyProfile()
+    }
+
+    private fun observeLiveData() {
+        viewModel.user.observe(viewLifecycleOwner, {
+            when (it.status) {
+                ApiStatus.LOADING -> {
+
+                }
+                ApiStatus.SUCCESS -> {
+                    binding.user = it.data
+                    setupSkillsGroup(it.data!!.skills)
+                }
+                ApiStatus.ERROR -> {
+                    Log.d(TAG, "${it.message}")
+                }
+            }
+        })
+    }
+
+    private fun setupSkillsGroup(skills: List<String>) {
+        with(binding) {
+            skills.forEach { skill ->
+                val btn = ThemedButton(requireContext())
+                btn.text = skill
+                val layout = LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+                layout.setMargins(0, 10, 10, 10)
+                groupSkills.addView(btn, layout)
+            }
+        }
+    }
+
+    private fun initializeViewComponents() {
+        (activity as MainActivity).hideFab()
+        with(binding) {
+            edPhone.setOnClickListener {
+                val currentPhoneNumber = edPhone.text.toString()
+                parentFragmentManager.replace(
+                    UpdatePhoneNumberFragment.newInstance(
+                        currentPhoneNumber
+                    ), container = R.id.host_fragment, allowAddToBackStack = true
+                )
+            }
+
+            edAddress.setOnClickListener {
+                val user = viewModel.user.value?.data
+
+                user?.let {
+                    parentFragmentManager.replace(
+                        UpdateAddressFragment.newInstance(
+                            user.addressCity ?: "",
+                            user.addressDistrict ?: "",
+                            user.addressWard ?: "",
+                            user.addressHouseNumber ?: ""
+                        ), container = R.id.host_fragment, allowAddToBackStack = true
+                    )
+                }
+            }
+
+            edDOB.setOnClickListener {
+                val dob = edDOB.text.toString()
+                parentFragmentManager.replace(
+                    UpdateDOBFragment.newInstance(dob),
+                    container = R.id.host_fragment,
+                    allowAddToBackStack = true
+                )
+            }
+
+            btnAddSkill.setOnClickListener {
+                val user = viewModel.user.value?.data
+
+                user?.let {
+                    parentFragmentManager.replace(
+                        UpdateSkillsFragment.newInstance(user.skills),
+                        container = R.id.host_fragment,
+                        allowAddToBackStack = true
+                    )
+                }
+            }
+        }
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AccountFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AccountFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() = AccountFragment()
     }
 }

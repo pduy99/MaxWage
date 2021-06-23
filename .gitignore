@@ -97,3 +97,4 @@ lint/tmp/
 
 # Android Profiling
 *.hprof
+app/src/main/java/com/helios/maxwage/utils/Constants.kt

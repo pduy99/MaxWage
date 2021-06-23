@@ -5,4 +5,149 @@
     <string name="new_suggestion">New Suggestion</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="jobs">Jobs</string>
+    <string name="account">Account</string>
+    <string name="setting">Setting</string>
+    <string name="AppName">Max Wage</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_signup_hint">Don\'t have an account? Sign Up</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="register">Register</string>
+    <string name="fullname">Your full name</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="signup_login_hint">Already have an account? Sign In</string>
+    <string name="or">Or</string>
+    <string name="or_login_with">Or login with</string>
+    <string name="search">Search</string>
+    <string name="filter">Filter</string>
+    <string name="help">Help</string>
+    <string name="schedule_job">Schedule Job</string>
+    <string name="scheduling_dialog_message">Please wait while we create the best suite job schedule for you.</string>
+    <string name="if_this_is_on_we_will_only_create_a_job_schedule_from_your_favorite_jobs_list">If this is on, we will only create a job schedule from your favorite jobs list</string>
+    <string name="only_select_jobs_from_my_favourite">Only select jobs from my favorite</string>
+    <string name="start_hour">Start Hour:</string>
+    <string name="end_hour">End Hour:</string>
+    <string name="set_free_time">Set free time</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
+    <string name="total_working_hour_message">I would like to work %1$d hours a week</string>
+    <string name="recommended_working_hour_alert">We recommend that you should work %1$d hours a week, current %2$d hours</string>
+    <string name="apply_now">Apply now</string>
+    <string name="logo_of_company">Logo of company</string>
+    <string name="location">Location</string>
+    <string name="wage">Wage</string>
+    <string name="work_schedule">Work schedule</string>
+    <string name="skills_requirement">Skills requirement</string>
+    <string name="job_description">Job Description</string>
+    <string name="flexible_time_notification">This job is flexible, you can flexibly choose working days according to your free time</string>
+    <string name="current_address">Current address</string>
+    <string name="birthday">Birthday</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Phone number</string>
+    <string name="add_skills">Add Skills</string>
+    <string name="update_your_skills_to_match_the_job_requirements">Update your skills to match the job requirements.</string>
+    <string name="you_can_add_up_to_10_skills">You can add up to 10 skills</string>
+    <string name="recruiters_will_contact_you_via_this_phone_number">Recruiters will contact you via this phone number</string>
+    <string name="update">Update</string>
+    <string name="city">City</string>
+    <string name="district">District</string>
+    <string name="ward">Ward</string>
+    <string name="house_number_street_name">House number, street name</string>
+    <string name="save">Save</string>
+    <string name="list_skills">List skills</string>
+    <string name="clear">Clear</string>
+    <string name="job_location">Job Location</string>
+    <string name="min_hourly_wage">Min hourly wage</string>
+    <string name="job_requirement">Job requirement</string>
+    <string name="view_all">View all</string>
+    <string name="view_less">View less</string>
+    <string name="match_my_skills_only">Match my skills only</string>
+    <string name="only_my_favorite_jobs">Only my favorite jobs</string>
+    <string name="apply_filter">Apply filter</string>
+    <string name="select_district">Select District</string>
+    <string name="num_0">0</string>
+    <string name="jobs_found">Jobs found</string>
+    <string name="i_would_like_to_work_0_hour_a_week">I would like to work 0 hour a week</string>
+
+    <string-array name="timetable_header">
+        <item></item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+        <item>Sun</item>
+    </string-array>
+
+    <string-array name="support_City">
+        <item>Ho Chi Minh City</item>
+    </string-array>
+
+    <string-array name="HCMC_District">
+        <item>Quận 1</item>
+        <item>Quận 2</item>
+        <item>Quận 3</item>
+        <item>Quận 4</item>
+        <item>Quận 5</item>
+        <item>Quận 6</item>
+        <item>Quận 7</item>
+        <item>Quận 8</item>
+        <item>Quận 9</item>
+        <item>Quận 10</item>
+        <item>Quận 11</item>
+        <item>Quận 12</item>
+        <item>Bình Tân</item>
+        <item>Bình Thạnh</item>
+        <item>Gò Vấp</item>
+        <item>Phú Nhuận</item>
+        <item>Tân Bình</item>
+        <item>Tân Phú</item>
+        <item>Thủ Đức</item>
+        <item>Bình Chánh</item>
+        <item>Cần Giờ</item>
+        <item>Củ Chi</item>
+        <item>Hốc Môn</item>
+        <item>Nhà Bè</item>
+    </string-array>
+
+    <string-array name="skills">
+        <item>Bán hàng</item>
+        <item>Năng động</item>
+        <item>Chăm chỉ</item>
+        <item>Anh văn</item>
+        <item>Trung học phổ thông</item>
+        <item>Tạp vụ</item>
+        <item>Ham học hỏi</item>
+        <item>Trung cấp - nghề</item>
+        <item>Trách nhiệm</item>
+        <item>Khéo léo</item>
+        <item>Có phương tiện cá nhân</item>
+        <item>Trung thực</item>
+        <item>Tỉ mỉ</item>
+        <item>Cao đẳng</item>
+        <item>Thân thiện</item>
+        <item>Giữ xe</item>
+        <item>Bảo vệ</item>
+        <item>Kiểm kê hàng hóa</item>
+        <item>Sắp xếp hàng hóa</item>
+        <item>Đúng giờ</item>
+        <item>Tiếp thị</item>
+        <item>Giao tiếp</item>
+        <item>Thu ngân</item>
+        <item>Pha chế</item>
+        <item>Phục vụ</item>
+        <item>Ngoại hình</item>
+        <item>Cử nhân</item>
+        <item>Cử nhân Anh</item>
+        <item>MS Office</item>
+        <item>Trông trẻ</item>
+        <item>Máy tính cá nhân</item>
+        <item>Sư phạm</item>
+        <item>Tiếng nhật</item>
+        <item>Sinh viên</item>
+    </string-array>
+
 </resources>

@@ -8,7 +8,12 @@
     <color name="colorTextDark">#212121</color>
     <color name="colorSecondaryText">#757575</color>
     <color name="colorDivider">#BDBDBD</color>
+    <color name="white_smoke">#F5F5F5</color>
+    <color name="red">#FF0000</color>
+    <color name="light_background">#f7f9fc</color>
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_grey">#f3f3f3</color>
+
 </resources>

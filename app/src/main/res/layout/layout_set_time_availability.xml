@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/btnInfo"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/curved_toolbar"
+            android:backgroundTint="@color/light_grey"
+            app:menu="@menu/set_availability_menu">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawablePadding="6dp"
+                android:gravity="center_vertical"
+                android:text="Availability"
+                app:drawableStartCompat="@drawable/ic_today" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <com.addisonelliott.segmentedbutton.SegmentedButtonGroup
+            android:id="@+id/segmentGroup_freeTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:background="@color/light_grey"
+            app:position="0"
+            app:radius="30dp"
+            app:rippleColor="@color/colorAccent"
+            app:selectedBackground="@color/colorAccent"
+            app:selectedBorderColor="@color/colorAccent"
+            app:selectedBorderWidth="2dp"
+            app:selectedButtonRadius="30dp"
+            app:selectionAnimationDuration="200">
+
+            <com.addisonelliott.segmentedbutton.SegmentedButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="8dp"
+                app:selectedTextColor="@color/white"
+                app:text="Day Session"
+                app:textColor="@color/black"
+                app:textSize="15sp" />
+
+            <com.addisonelliott.segmentedbutton.SegmentedButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="8dp"
+                app:selectedTextColor="@color/white"
+                app:text="Specific Time"
+                app:textColor="@color/black"
+                app:textSize="15sp" />
+
+        </com.addisonelliott.segmentedbutton.SegmentedButtonGroup>
+
+        <FrameLayout
+            android:id="@+id/frameLayoutContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</layout>

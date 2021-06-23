@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".views.bottomsheet.SetFreeDaySessionFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTotalHour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="12dp"
+            android:text="@string/i_would_like_to_work_0_hour_a_week"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="7">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Mon"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Tue"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Wed"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Thu"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Fri"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Sat"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Sun"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+                android:id="@+id/firstShift"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                app:justifyContent="space_around"
+                app:toggle_requiredAmount="0"
+                app:toggle_selectableAmount="7"> <!-- this attribute is from the underlying FlexboxLayout -->
+
+                <include
+                    android:id="@+id/mon"
+                    layout="@layout/item_first_working_shift" />
+
+                <include
+                    android:id="@+id/tue"
+                    layout="@layout/item_first_working_shift" />
+
+                <include
+                    android:id="@+id/wed"
+                    layout="@layout/item_first_working_shift" />
+
+                <include
+                    android:id="@+id/thu"
+                    layout="@layout/item_first_working_shift" />
+
+                <include
+                    android:id="@+id/fri"
+                    layout="@layout/item_first_working_shift" />
+
+                <include
+                    android:id="@+id/sat"
+                    layout="@layout/item_first_working_shift" />
+
+                <include
+                    android:id="@+id/sun"
+                    layout="@layout/item_first_working_shift" />
+
+            </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
+
+            <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+                android:id="@+id/secondShift"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                app:justifyContent="space_around"
+                app:toggle_requiredAmount="0"
+                app:toggle_selectableAmount="7"> <!-- this attribute is from the underlying FlexboxLayout -->
+
+                <include layout="@layout/item_second_working_shift" />
+
+                <include layout="@layout/item_second_working_shift" />
+
+                <include layout="@layout/item_second_working_shift" />
+
+                <include layout="@layout/item_second_working_shift" />
+
+                <include layout="@layout/item_second_working_shift" />
+
+                <include layout="@layout/item_second_working_shift" />
+
+                <include layout="@layout/item_second_working_shift" />
+
+            </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
+
+            <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+                android:id="@+id/thirdShift"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                app:justifyContent="space_around"
+                app:toggle_requiredAmount="0"
+                app:toggle_selectableAmount="7"> <!-- this attribute is from the underlying FlexboxLayout -->
+
+                <include layout="@layout/item_third_working_shift" />
+
+                <include layout="@layout/item_third_working_shift" />
+
+                <include layout="@layout/item_third_working_shift" />
+
+                <include layout="@layout/item_third_working_shift" />
+
+                <include layout="@layout/item_third_working_shift" />
+
+                <include layout="@layout/item_third_working_shift" />
+
+                <include layout="@layout/item_third_working_shift" />
+
+            </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/only_select_jobs_from_my_favourite"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvOnlyFavoriteJob"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="300dp"
+                        android:text="@string/if_this_is_on_we_will_only_create_a_job_schedule_from_your_favorite_jobs_list"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchOnlyFavoriteJob"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnScheduleJob"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:backgroundTint="@color/color_state_materialbutton"
+            android:enabled="true"
+            android:text="@string/schedule_job"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+
+</layout>

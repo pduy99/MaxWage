@@ -4,40 +4,31 @@
 
     <item
         android:id="@+id/menu_item_timetable"
-        android:title="@string/timetable"
+        android:enabled="true"
         android:icon="@drawable/ic_timetable_filled"
-        app:showAsAction="always"
-        android:enabled="true"/>
+        android:title="@string/timetable"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_item_jobs"
-        android:title="@string/timetable"
+        android:enabled="true"
         android:icon="@drawable/ic_state_job"
-        app:showAsAction="always"
-        android:enabled="true"/>
-
-    <item
-        android:enabled="false"
-        android:title="@string/new_suggestion"
-        app:showAsAction="always"
-        android:checkable="false"
-        android:checked="false"
-        />
+        android:title="@string/jobs"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_item_account"
-        android:title="@string/timetable"
+        android:enabled="true"
         android:icon="@drawable/ic_state_person"
-        app:showAsAction="always"
-        android:enabled="true"/>
+        android:title="@string/account"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_item_setting"
-        android:title="@string/timetable"
+        android:enabled="true"
         android:icon="@drawable/ic_state_setting"
-        app:showAsAction="always"
-        android:enabled="true"/>
-
+        android:title="@string/setting"
+        app:showAsAction="always" />
 
 
 </menu>

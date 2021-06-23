@@ -1,60 +1,218 @@
 package com.helios.maxwage.views.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.helios.maxwage.R
+import com.helios.maxwage.adapters.ListJobAdapter
+import com.helios.maxwage.api.ApiStatus
+import com.helios.maxwage.databinding.FragmentJobBinding
+import com.helios.maxwage.models.Job
+import com.helios.maxwage.utils.replace
+import com.helios.maxwage.viewmodels.JobFragmentViewModel
+import com.helios.maxwage.views.activities.MainActivity
+import com.helios.maxwage.views.base.BaseFragment
+import com.helios.maxwage.views.bottomsheet.JobFilterBottomSheet
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class JobFragment : BaseFragment() {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [JobFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class JobFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentJobBinding
+    private lateinit var viewModel: JobFragmentViewModel
+    private lateinit var adapter: ListJobAdapter
+
+    private var _selectedDistrict: List<String> = listOf()
+    private var _minWage: Int = 0
+    private var _selectedSkills: List<String> = listOf()
+    private var _matchMySkillsOnly: Boolean = false
+    private var _myFavoriteJobsOnly: Boolean = false
+
+    override val TAG: String
+        get() = "JobFragment"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_job, container, false)
+    ): View {
+        binding = FragmentJobBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this).get(JobFragmentViewModel::class.java)
+
+        initializeViewComponents()
+        fetchJobs()
+        setupToolbar()
+        observeData()
+
+        return binding.root
+    }
+
+    private fun fetchJobs() {
+        viewModel.fetchAllJob(
+            _selectedDistrict,
+            _minWage,
+            _selectedSkills,
+            _matchMySkillsOnly,
+            _myFavoriteJobsOnly
+        )
+    }
+
+    private fun setupToolbar() {
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+    }
+
+    private fun observeData() {
+        viewModel.jobs.observe(viewLifecycleOwner, {
+            when (it.status) {
+                ApiStatus.LOADING -> {
+                    Log.d(TAG, "Loading")
+                }
+                ApiStatus.SUCCESS -> {
+                    binding.tvTotalJob.text = it.data!!.size.toString()
+                    setupJobRecyclerView(it.data)
+                    binding.swiperefresh.isRefreshing = false
+                }
+                ApiStatus.ERROR -> {
+                    Log.d(TAG, "Error ${it.message}")
+                    binding.swiperefresh.isRefreshing = false
+                }
+            }
+        })
+    }
+
+    private fun initializeViewComponents() {
+        (activity as MainActivity).hideFab()
+        with(binding) {
+            swiperefresh.setOnRefreshListener {
+                fetchJobs()
+            }
+        }
+    }
+
+    private fun setupJobRecyclerView(jobs: List<Job>) {
+        adapter = ListJobAdapter(jobs).apply {
+
+            val jobAdapterObserver = JobAdapterObserver()
+            registerAdapterDataObserver(jobAdapterObserver)
+
+            onClick = { jobId, isFavorite ->
+                parentFragmentManager.replace(
+                    JobDetailFragment.newInstance(jobId, isFavorite),
+                    container = R.id.host_fragment,
+                    allowAddToBackStack = true
+                )
+            }
+
+            onAddFavoriteJob = { jobId ->
+                viewModel.addFavoriteJob(jobId).observe(viewLifecycleOwner, {
+                    when (it.status) {
+                        ApiStatus.LOADING -> {
+
+                        }
+                        ApiStatus.SUCCESS -> {
+                            val indexJob =
+                                adapter.getData().indexOfFirst { job -> job._id == jobId }
+                            if (indexJob != -1) {
+                                adapter.getData()[indexJob].isFavorite = true
+                                adapter.notifyItemChanged(indexJob)
+                            }
+                        }
+                        ApiStatus.ERROR -> {
+                            Log.d(TAG, "${it.message}")
+                        }
+                    }
+                })
+            }
+
+            onRemoveFavoriteJob = { jobId ->
+                viewModel.removeFavoriteJob(jobId).observe(viewLifecycleOwner, {
+                    when (it.status) {
+                        ApiStatus.LOADING -> {
+
+                        }
+                        ApiStatus.SUCCESS -> {
+                            val indexJob =
+                                adapter.getData().indexOfFirst { job -> job._id == jobId }
+                            if (indexJob != -1) {
+                                adapter.getData()[indexJob].isFavorite = false
+                                adapter.notifyItemChanged(indexJob)
+                            }
+                        }
+                        ApiStatus.ERROR -> {
+                            Log.d(TAG, "${it.message}")
+                        }
+                    }
+                })
+            }
+        }
+        binding.recyclerviewJobs.adapter = adapter
+        binding.recyclerviewJobs.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.jobs_page_menu, menu)
+
+        val searchView = menu.findItem(R.id.menu_item_search_job).actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(searchText: String?): Boolean {
+                adapter.filter.filter(searchText)
+                return true
+            }
+        })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_item_filter -> {
+                JobFilterBottomSheet.getInstance().apply {
+                    onApplyFilter =
+                        { selectedDistrict, minWage, selectedSkills, matchMySkillsOnly, myFavoriteJobsOnly ->
+                            viewModel.fetchAllJob(
+                                selectedDistrict,
+                                minWage,
+                                selectedSkills,
+                                matchMySkillsOnly,
+                                myFavoriteJobsOnly
+                            )
+
+                            _selectedDistrict = selectedSkills
+                            _minWage = minWage
+                            _selectedSkills = selectedSkills
+                            _matchMySkillsOnly = matchMySkillsOnly
+                            _myFavoriteJobsOnly = myFavoriteJobsOnly
+                        }
+                }.show(childFragmentManager, JobFilterBottomSheet::class.java.name)
+
+                true
+            }
+
+            else -> {
+                false
+            }
+        }
+    }
+
+    inner class JobAdapterObserver : RecyclerView.AdapterDataObserver() {
+        override fun onChanged() {
+            binding.tvTotalJob.text = adapter.getData().size.toString()
+        }
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment JobFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            JobFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() = JobFragment()
     }
 }

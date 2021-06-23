@@ -1,60 +1,102 @@
 package com.helios.maxwage.views.fragments
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreferenceCompat
+import com.helios.maxwage.BuildConfig
 import com.helios.maxwage.R
+import com.helios.maxwage.databinding.FragmentSettingBinding
+import com.helios.maxwage.sharepreferences.SharedPrefs
+import com.helios.maxwage.utils.replace
+import com.helios.maxwage.views.activities.LoginActivity
+import com.helios.maxwage.views.activities.MainActivity
+import com.helios.maxwage.views.base.BaseFragment
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class SettingFragment : BaseFragment() {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SettingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class SettingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentSettingBinding
+    override val TAG: String
+        get() = "SettingFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting, container, false)
+    ): View {
+
+        binding = FragmentSettingBinding.inflate(inflater, container, false)
+
+        initializeViewComponents()
+
+        return binding.root
+    }
+
+    private fun initializeViewComponents() {
+        childFragmentManager.replace(SettingPreference(), container = R.id.framelayout_setting)
+        (activity as MainActivity).hideFab()
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SettingFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SettingFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        fun newInstance() = SettingFragment()
+    }
+
+    class SettingPreference : PreferenceFragmentCompat() {
+
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            listView.overScrollMode = View.OVER_SCROLL_NEVER
+        }
+
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(R.xml.settings, rootKey)
+
+            val onlyJobsMatchAddressPref =
+                findPreference<SwitchPreferenceCompat>("onlyJobMatchAddress")
+            val onlyJobsMatchSkillsPref =
+                findPreference<SwitchPreferenceCompat>("onlyJobMatchSkills")
+
+            findPreference<Preference>("version")?.apply {
+                summary = BuildConfig.VERSION_NAME
+            }
+
+            onlyJobsMatchAddressPref?.apply {
+                isChecked = SharedPrefs.onlyJobsMatchAddress
+                setOnPreferenceClickListener {
+                    it as SwitchPreferenceCompat
+                    SharedPrefs.onlyJobsMatchAddress = it.isChecked
+                    SharedPrefs.onlyJobsMatchSkills = it.isChecked.and(false)
+
+                    onlyJobsMatchSkillsPref?.isChecked = SharedPrefs.onlyJobsMatchSkills
+
+                    true
                 }
             }
+
+            onlyJobsMatchSkillsPref?.apply {
+                isChecked = SharedPrefs.onlyJobsMatchSkills
+                setOnPreferenceClickListener {
+                    it as SwitchPreferenceCompat
+                    SharedPrefs.onlyJobsMatchSkills = it.isChecked
+                    SharedPrefs.onlyJobsMatchAddress = it.isChecked.and(false)
+
+                    onlyJobsMatchAddressPref?.isChecked = SharedPrefs.onlyJobsMatchAddress
+                    true
+                }
+            }
+
+            findPreference<Preference>("logout")?.setOnPreferenceClickListener {
+                SharedPrefs.accessToken = ""
+                Intent(requireContext(), LoginActivity::class.java).apply {
+                    startActivity(this)
+                    activity?.finish()
+                }
+                true
+            }
+        }
     }
 }
