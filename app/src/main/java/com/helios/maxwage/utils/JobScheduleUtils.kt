@@ -17,7 +17,7 @@ object JobScheduleUtils {
                 if (len > 0) {
                     val rightIndex = (index - 1) % 24
                     val leftIndex = (index - len) % 24
-                    val time = "${leftIndex.toTimeFormat()}-${(rightIndex + 1).toTimeFormat()}"
+                    val time = "${leftIndex.toTimeFormat()}-${(rightIndex).toTimeFormat()}"
                     freeTime[(index - 1) / 24].add(time)
                 }
                 len = 0
