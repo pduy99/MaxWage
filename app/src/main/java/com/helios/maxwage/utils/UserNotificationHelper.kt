@@ -1,6 +1,9 @@
 package com.helios.maxwage.utils
 
+import android.app.Dialog
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -98,6 +101,17 @@ object UserNotificationHelper {
         }
         dialog.show()
 
+        timerDelayRemoveDialog(10_000, dialog)
+
         return dialog
+    }
+
+    private fun timerDelayRemoveDialog(time: Long, d: Dialog) {
+        Handler(Looper.getMainLooper()).postDelayed(
+            { if(d.isShowing) {
+                d.dismiss()
+            }}
+            , time
+        )
     }
 }
