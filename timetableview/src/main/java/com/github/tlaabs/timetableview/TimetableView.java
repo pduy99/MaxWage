@@ -1,5 +1,7 @@
 package com.github.tlaabs.timetableview;
 
+import java.lang.Math;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -311,12 +313,12 @@ public class TimetableView extends LinearLayout {
 
             for(i = 0; i < stickers.get(orders[0]).getView().size(); i++) {
                 TextView v = stickers.get(orders[0]).getView().get(i);
-                v.setBackgroundColor(Color.parseColor(stickerColors[i % (colorSize)]));
+                // Same job will have same color
+                v.setBackgroundColor(Color.parseColor(stickerColors[Math.abs(v.getText().hashCode()) % (colorSize)]));
             }
         } catch (Exception ex) {
             Log.d("TimetableView", ex.getMessage());
         }
-
     }
 
     private void createTable() {
