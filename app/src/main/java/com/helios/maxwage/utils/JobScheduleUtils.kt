@@ -2,7 +2,8 @@ package com.helios.maxwage.utils
 
 import com.github.tlaabs.timetableview.Schedule
 import com.github.tlaabs.timetableview.Time
-import com.helios.maxwage.models.JobSchedule
+import com.helios.maxwage.models.JobSchedules
+import com.helios.maxwage.models.ScheduleWrapper
 
 object JobScheduleUtils {
 
@@ -36,33 +37,36 @@ object JobScheduleUtils {
         return freeTime
     }
 
-    fun mapJobScheduleToSchedules(jobSchedule: JobSchedule): ArrayList<Schedule> {
-        val schedules = ArrayList<Schedule>()
+    fun makeScheduleWrappersFromJobSchedules(jobSchedules: JobSchedules): List<ScheduleWrapper> {
 
-        jobSchedule.combo.forEachIndexed { index, value ->
-            if (value.isNotEmpty()) {
-                value.forEach {
-                    val schedule = Schedule().apply {
-                        val startTimeStr = it.time.split("-")[0]
-                        val endTimeStr = it.time.split("-")[1]
-                        val startTimeHour = startTimeStr.split(":")[0].toInt()
-                        val startTimeMinute = startTimeStr.split(":")[1].toInt()
-                        val endTimeHour = endTimeStr.split(":")[0].toInt()
-                        val endTimeMinute = endTimeStr.split(":")[1].toInt()
+        val scheduleWrappers = mutableListOf<ScheduleWrapper>()
 
-                        day = index
-                        jobId = it.jobIds[0]
-                        jobTitle = it.jobIds[0]
-                        startTime = Time(startTimeHour, startTimeMinute)
-                        endTime = Time(endTimeHour, endTimeMinute)
+        jobSchedules.combos.forEach { schedule ->
+            val schedules = arrayListOf<Schedule>()
+            schedule.forEachIndexed { index, value ->
+                if (value.isNotEmpty()) {
+                    value.forEach {
+                        Schedule().apply {
+                            val startTimeStr = it.time.split("-")[0]
+                            val endTimeStr = it.time.split("-")[1]
+                            val startTimeHour = startTimeStr.split(":")[0].toInt()
+                            val startTimeMinute = startTimeStr.split(":")[1].toInt()
+                            val endTimeHour = endTimeStr.split(":")[0].toInt()
+                            val endTimeMinute = endTimeStr.split(":")[1].toInt()
+
+                            day = index
+                            jobId = it.jobIds[0]
+                            jobTitle = it.jobIds[0]
+                            startTime = Time(startTimeHour, startTimeMinute)
+                            endTime = Time(endTimeHour, endTimeMinute)
+                        }.also {
+                            schedules.add(it)
+                        }
                     }
-
-                    schedules.add(schedule)
                 }
-
             }
+            scheduleWrappers.add(ScheduleWrapper(schedules))
         }
-
-        return schedules
+        return scheduleWrappers
     }
 }

@@ -3,7 +3,7 @@ package com.helios.maxwage.repositories
 import com.helios.maxwage.api.ApiFactory
 import com.helios.maxwage.api.Resource
 import com.helios.maxwage.api.ResponseHandler
-import com.helios.maxwage.models.JobSchedule
+import com.helios.maxwage.models.JobSchedules
 
 /**
  * Created by Helios on 5/31/2021.
@@ -25,7 +25,7 @@ class ServiceRepository(private val responseHandler: ResponseHandler) {
         isOnlyFavoriteJob: Boolean,
         matchSkills: Boolean,
         matchAddress: Boolean
-    ): Resource<JobSchedule> {
+    ): Resource<JobSchedules> {
         return try {
             responseHandler.handleSuccess(
                 ApiFactory.instance.scheduleJob(
