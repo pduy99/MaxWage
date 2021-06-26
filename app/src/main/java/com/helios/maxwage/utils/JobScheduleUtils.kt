@@ -51,8 +51,12 @@ object JobScheduleUtils {
                             val endTimeStr = it.time.split("-")[1]
                             val startTimeHour = startTimeStr.split(":")[0].toInt()
                             val startTimeMinute = startTimeStr.split(":")[1].toInt()
-                            val endTimeHour = endTimeStr.split(":")[0].toInt()
+                            var endTimeHour = endTimeStr.split(":")[0].toInt()
                             val endTimeMinute = endTimeStr.split(":")[1].toInt()
+
+                            if(endTimeHour == 0) {
+                                endTimeHour = 24
+                            }
 
                             day = index
                             jobId = it.jobIds[0]
