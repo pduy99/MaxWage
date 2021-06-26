@@ -1,7 +1,7 @@
 package com.helios.maxwage.api
 
 import com.helios.maxwage.models.Job
-import com.helios.maxwage.models.JobSchedule
+import com.helios.maxwage.models.JobSchedules
 import com.helios.maxwage.models.LoginResponse
 import com.helios.maxwage.models.User
 import retrofit2.http.*
@@ -117,6 +117,6 @@ interface ApiService {
         @Query("freeTime") freeTime: Array<MutableList<String>>,
         @Query("matchSkills") matchSkills: Boolean,
         @Query("matchAddress") matchAddress: Boolean,
-    ): ApiResponse<JobSchedule>
+    ): ApiResponse<JobSchedules>
 
 }

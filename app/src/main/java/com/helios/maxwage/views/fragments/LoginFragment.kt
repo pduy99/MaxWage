@@ -11,13 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.helios.maxwage.api.ApiStatus
 import com.helios.maxwage.databinding.FragmentLoginBinding
-import com.helios.maxwage.interfaces.ILoginCallback
+import com.helios.maxwage.interfaces.IAuthenticationCallback
 import com.helios.maxwage.sharepreferences.SharedPrefs
 import com.helios.maxwage.viewmodels.LoginViewModel
 import com.helios.maxwage.views.activities.MainActivity
 import com.helios.maxwage.views.base.BaseFragment
 
-class LoginFragment(var listerner: ILoginCallback) : BaseFragment() {
+class LoginFragment(var listerner: IAuthenticationCallback) : BaseFragment() {
 
     private lateinit var binding: FragmentLoginBinding
     private val viewModel: LoginViewModel by viewModels()
@@ -100,6 +100,6 @@ class LoginFragment(var listerner: ILoginCallback) : BaseFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(listener: ILoginCallback) = LoginFragment(listener)
+        fun newInstance(listener: IAuthenticationCallback) = LoginFragment(listener)
     }
 }

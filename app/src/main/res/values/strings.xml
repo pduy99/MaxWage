@@ -70,6 +70,24 @@
     <string name="num_0">0</string>
     <string name="jobs_found">Jobs found</string>
     <string name="i_would_like_to_work_0_hour_a_week">I would like to work 0 hour a week</string>
+    <string name="clear_all">Clear all</string>
+    <string name="delete_others">Delete others</string>
+    <string name="delete_current_timetable">Delete current timetable</string>
+    <string name="info">Info</string>
+    <string name="back_to_previous_timetable">Back to previous timetable</string>
+    <string name="forward_to_next_timetable">Forward to next timetable</string>
+    <string name="empty_timetable">Empty Timetable</string>
+    <string name="timetable_2">Timetable #2</string>
+    <string name="timetable_order">Timetable %1$d / %2$d </string>
+    <string name="create_new_schedule">Create new schedule</string>
+    <string name="create_new_schedule_warning">Your are going to create a new job schedule, which will delete current schedule. Are you sure you want to continue?</string>
+    <string name="continue_btn_text">Continue</string>
+    <string name="encountered_error">You have encountered an error</string>
+    <string name="create_schedule_failed_warning">There is an error while we were building your job schedule, please try again later!</string>
+    <string name="create_schedule_completed">Create schedule completed</string>
+    <string name="create_schedule_completed_notice">We have found %1$d schedules suitable for you with maximum salary: %2$s Weekly</string>
+    <string name="remove_this">Remove this</string>
+    <string name="remove_others">Remove others</string>
 
     <string-array name="timetable_header">
         <item></item>

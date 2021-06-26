@@ -16,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
                 finish()
             }
         } else {
-            Intent(this, LoginActivity::class.java).apply {
+            Intent(this, AuthenticationActivity::class.java).apply {
                 startActivity(this)
                 finish()
             }

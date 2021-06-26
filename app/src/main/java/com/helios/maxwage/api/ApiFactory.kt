@@ -1,6 +1,7 @@
 package com.helios.maxwage.api
 
 import com.google.gson.GsonBuilder
+import com.helios.maxwage.BuildConfig
 import com.helios.maxwage.utils.Constants
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -21,7 +22,7 @@ object ApiFactory {
             .setPrettyPrinting()
             .create()
 
-        baseUrl(Constants.SERVER_HOST)
+        baseUrl(BuildConfig.URL_SERVER)
         addConverterFactory(GsonConverterFactory.create())
         client(createRequestInterceptorClient())
         build()

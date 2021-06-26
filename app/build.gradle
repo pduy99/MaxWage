@@ -17,18 +17,20 @@ android {
         applicationId "com.helios.maxwage"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0-beta"
+        versionCode 2
+        versionName "1.1-beta"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField "String", "SERVER_HOST", "\"https://172.21.224.1/v1/\""
     }
 
     buildTypes {
+        debug {
+            buildConfigField 'String', 'URL_SERVER', "\"http://${getIP()}:8080/v1/\""
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'URL_SERVER', '"http://34.126.68.152:8080/v1/'
         }
     }
     compileOptions {
@@ -38,6 +40,26 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+}
+
+static def getIP() {
+    InetAddress result = null
+    Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces()
+    while (interfaces.hasMoreElements()) {
+        Enumeration<InetAddress> addresses = interfaces.nextElement().getInetAddresses()
+        while (addresses.hasMoreElements()) {
+            InetAddress address = addresses.nextElement()
+            if (!address.isLoopbackAddress()) {
+                if (address.isSiteLocalAddress()) {
+                    return address.getHostAddress()
+                } else if (result == null) {
+                    result = address
+                }
+            }
+        }
+    }
+    return (result != null ? result : InetAddress.getLocalHost()).getHostAddress()
 }
 
 dependencies {

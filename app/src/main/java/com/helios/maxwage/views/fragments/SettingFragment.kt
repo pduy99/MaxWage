@@ -13,7 +13,7 @@ import com.helios.maxwage.R
 import com.helios.maxwage.databinding.FragmentSettingBinding
 import com.helios.maxwage.sharepreferences.SharedPrefs
 import com.helios.maxwage.utils.replace
-import com.helios.maxwage.views.activities.LoginActivity
+import com.helios.maxwage.views.activities.AuthenticationActivity
 import com.helios.maxwage.views.activities.MainActivity
 import com.helios.maxwage.views.base.BaseFragment
 
@@ -91,7 +91,7 @@ class SettingFragment : BaseFragment() {
 
             findPreference<Preference>("logout")?.setOnPreferenceClickListener {
                 SharedPrefs.accessToken = ""
-                Intent(requireContext(), LoginActivity::class.java).apply {
+                Intent(requireContext(), AuthenticationActivity::class.java).apply {
                     startActivity(this)
                     activity?.finish()
                 }

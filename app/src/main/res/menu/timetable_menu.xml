@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_item_timetable_info"
+        android:icon="@drawable/ic_outline_info_24"
+        android:title="@string/info"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_item_clear_all"
+        android:title="@string/clear_all"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_item_remove_this"
+        android:title="@string/remove_this"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_item_remove_others"
+        android:title="@string/remove_others"
+        app:showAsAction="never" />
+
+</menu>

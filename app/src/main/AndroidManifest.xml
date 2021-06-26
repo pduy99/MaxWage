@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".views.activities.LoginActivity"
+            android:name=".views.activities.AuthenticationActivity"
             android:theme="@style/LoginActivity" />
         <activity android:name=".views.activities.MainActivity">
 

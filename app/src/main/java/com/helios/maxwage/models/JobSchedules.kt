@@ -1,13 +1,14 @@
 package com.helios.maxwage.models
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 /**
  * Created by Helios on 6/4/2021.
  */
 
-data class JobSchedule(
-    @SerializedName("combo") val combo: List<List<TimeCell>>,
+data class JobSchedules(
+    @SerializedName("combos") val combos: List<List<List<TimeCell>>>,
     @SerializedName("salary") val salary: Int
 )
 

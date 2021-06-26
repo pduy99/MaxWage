@@ -1,6 +1,7 @@
 package com.helios.maxwage.utils
 
 import android.content.Context
+import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -90,7 +91,11 @@ object UserNotificationHelper {
             }
         }
 
-        val dialog = builder.create()
+        val dialog = builder.create().apply {
+            if (title.isBlank()) {
+                this.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            }
+        }
         dialog.show()
 
         return dialog
