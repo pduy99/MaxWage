@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context=".views.activities.LoginActivity">
+        tools:context=".views.activities.AuthenticationActivity">
 
         <ScrollView
             android:layout_width="match_parent"

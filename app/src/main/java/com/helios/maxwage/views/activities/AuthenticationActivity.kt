@@ -4,13 +4,13 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.helios.maxwage.R
 import com.helios.maxwage.databinding.ActivityLoginBinding
-import com.helios.maxwage.interfaces.ILoginCallback
+import com.helios.maxwage.interfaces.IAuthenticationCallback
 import com.helios.maxwage.utils.replace
 import com.helios.maxwage.views.base.BaseActivity
 import com.helios.maxwage.views.fragments.LoginFragment
 import com.helios.maxwage.views.fragments.RegisterFragment
 
-class LoginActivity : BaseActivity(), ILoginCallback {
+class AuthenticationActivity : BaseActivity(), IAuthenticationCallback {
 
     private lateinit var binding: ActivityLoginBinding
     private var loginFragment = LoginFragment.newInstance(this)

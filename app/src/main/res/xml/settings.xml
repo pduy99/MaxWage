@@ -51,7 +51,7 @@
         <Preference
             app:iconSpaceReserved="false"
             app:key="about"
-            app:summary="This is a graduation thesis project of 2 K17 HCMUS students with id numbers 1712018 and 1712000"
+            app:summary="This is a graduation thesis project of 2 K17 HCMUS students with id numbers 1712018 and 1712620"
             app:title="About us" />
 
         <Preference

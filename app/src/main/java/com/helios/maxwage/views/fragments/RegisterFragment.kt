@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.helios.maxwage.api.ApiStatus
 import com.helios.maxwage.databinding.FragmentRegisterBinding
-import com.helios.maxwage.interfaces.ILoginCallback
+import com.helios.maxwage.interfaces.IAuthenticationCallback
 import com.helios.maxwage.utils.isEmailFormat
 import com.helios.maxwage.utils.isValidPhoneNumber
 import com.helios.maxwage.utils.validate
 import com.helios.maxwage.viewmodels.RegisterViewModel
 import com.helios.maxwage.views.base.BaseFragment
 
-class RegisterFragment(var listener: ILoginCallback) : BaseFragment() {
+class RegisterFragment(var listener: IAuthenticationCallback) : BaseFragment() {
 
     private lateinit var binding: FragmentRegisterBinding
     private val viewModel: RegisterViewModel by viewModels()
@@ -98,6 +98,6 @@ class RegisterFragment(var listener: ILoginCallback) : BaseFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(listener: ILoginCallback) = RegisterFragment(listener)
+        fun newInstance(listener: IAuthenticationCallback) = RegisterFragment(listener)
     }
 }
