@@ -17,8 +17,8 @@ android {
         applicationId "com.helios.maxwage"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 2
-        versionName "1.1-beta"
+        versionCode 3
+        versionName "1.1.1-beta"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
