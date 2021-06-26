@@ -108,10 +108,11 @@ object UserNotificationHelper {
 
     private fun timerDelayRemoveDialog(time: Long, d: Dialog) {
         Handler(Looper.getMainLooper()).postDelayed(
-            { if(d.isShowing) {
-                d.dismiss()
-            }}
-            , time
+            {
+                if (d.isShowing) {
+                    d.dismiss()
+                }
+            }, time
         )
     }
 }

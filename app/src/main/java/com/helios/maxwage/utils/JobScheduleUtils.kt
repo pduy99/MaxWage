@@ -54,7 +54,7 @@ object JobScheduleUtils {
                             var endTimeHour = endTimeStr.split(":")[0].toInt()
                             val endTimeMinute = endTimeStr.split(":")[1].toInt()
 
-                            if(endTimeHour == 0) {
+                            if (endTimeHour == 0) {
                                 endTimeHour = 24
                             }
 
@@ -69,7 +69,12 @@ object JobScheduleUtils {
                     }
                 }
             }
-            scheduleWrappers.add(ScheduleWrapper(listSchedule = schedules, salary =  jobSchedules.salary))
+            scheduleWrappers.add(
+                ScheduleWrapper(
+                    listSchedule = schedules,
+                    salary = jobSchedules.salary
+                )
+            )
         }
         return scheduleWrappers
     }

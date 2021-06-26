@@ -223,31 +223,33 @@ class TimetableFragment : BaseFragment(), OnJobClick {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_item_clear_all -> {
-                if(viewModel.getScheduleSize() != 0) {
+                if (viewModel.getScheduleSize() != 0) {
                     viewModel.clearAllTimeTables()
                 }
                 true
             }
             R.id.menu_item_remove_others -> {
-                if(viewModel.getScheduleSize() != 0) {
+                if (viewModel.getScheduleSize() != 0) {
                     viewModel.removeOthers(binding.viewPager.currentItem)
                 }
                 true
             }
             R.id.menu_item_remove_this -> {
-                if(viewModel.getScheduleSize() != 0) {
+                if (viewModel.getScheduleSize() != 0) {
                     viewModel.removeTimetableAt(binding.viewPager.currentItem)
                 }
                 true
             }
             R.id.menu_item_timetable_info -> {
-                if(viewModel.getScheduleSize() != 0) {
+                if (viewModel.getScheduleSize() != 0) {
                     val scheduleWrapper = viewModel.getScheduleAt(binding.viewPager.currentItem)
-                    this.showMessageDialog("Timetable Info", """
+                    this.showMessageDialog(
+                        "Timetable Info", """
                     Create date: ${scheduleWrapper!!.createDate.toString("dd/MM/yyyy")}
                     
                     Total salary: ${scheduleWrapper.salary.toCurrencyFormat()} Weekly  
-                """.trimIndent())
+                """.trimIndent()
+                    )
                 }
                 true
             }

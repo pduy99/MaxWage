@@ -1,7 +1,6 @@
 package com.helios.maxwage.models
 
 import com.google.gson.annotations.SerializedName
-import java.util.*
 
 /**
  * Created by Helios on 6/4/2021.

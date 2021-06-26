@@ -2,7 +2,6 @@ package com.helios.maxwage.api
 
 import com.google.gson.GsonBuilder
 import com.helios.maxwage.BuildConfig
-import com.helios.maxwage.utils.Constants
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

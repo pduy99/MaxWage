@@ -2,7 +2,6 @@ package com.helios.maxwage.models
 
 import com.github.tlaabs.timetableview.Schedule
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * Created by Helios on 6/25/2021.
@@ -13,7 +12,7 @@ import kotlin.collections.ArrayList
  */
 data class ScheduleWrapper(
     val listSchedule: ArrayList<Schedule> = arrayListOf(),
-    val salary : Int = 0,
+    val salary: Int = 0,
     val createDate: Date = Calendar.getInstance().time,
 )
 
