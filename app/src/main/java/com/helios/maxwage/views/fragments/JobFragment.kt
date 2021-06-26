@@ -188,7 +188,7 @@ class JobFragment : BaseFragment() {
                                 myFavoriteJobsOnly
                             )
 
-                            _selectedDistrict = selectedSkills
+                            _selectedDistrict = selectedDistrict
                             _minWage = minWage
                             _selectedSkills = selectedSkills
                             _matchMySkillsOnly = matchMySkillsOnly

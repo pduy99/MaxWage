@@ -13,7 +13,8 @@ import kotlin.collections.ArrayList
  */
 data class ScheduleWrapper(
     val listSchedule: ArrayList<Schedule> = arrayListOf(),
-    val createDate: Date = Calendar.getInstance().time
+    val salary : Int = 0,
+    val createDate: Date = Calendar.getInstance().time,
 )
 
 /**

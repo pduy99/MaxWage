@@ -191,15 +191,14 @@ class TimetableFragment : BaseFragment(), OnJobClick {
                 }
                 ApiStatus.SUCCESS -> {
                     if (shouldObserveData) {
-                        val totalSalary = it.data!![0].listSchedule.sumOf { job -> job.jobSalary }
                         this@TimetableFragment.hideLoadingDialog()
                         this@TimetableFragment.showMessageDialog(
                             getString(R.string.create_schedule_completed),
                             getString(
                                 R.string.create_schedule_completed_notice,
-                                it.data.size,
-                                totalSalary.toCurrencyFormat()
-                            )
+                                it.data!!.size,
+                                it.data[0].salary.toCurrencyFormat()
+                            ) + "Weekly"
                         )
                     } else {
                         shouldObserveData = true
@@ -247,7 +246,7 @@ class TimetableFragment : BaseFragment(), OnJobClick {
                     this.showMessageDialog("Timetable Info", """
                     Create date: ${scheduleWrapper!!.createDate.toString("dd/MM/yyyy")}
                     
-                    Total salary: ${scheduleWrapper.listSchedule.sumOf { job -> job.jobSalary }.toCurrencyFormat()}  
+                    Total salary: ${scheduleWrapper.salary.toCurrencyFormat()} Weekly  
                 """.trimIndent())
                 }
                 true

@@ -69,7 +69,7 @@ object JobScheduleUtils {
                     }
                 }
             }
-            scheduleWrappers.add(ScheduleWrapper(schedules))
+            scheduleWrappers.add(ScheduleWrapper(listSchedule = schedules, salary =  jobSchedules.salary))
         }
         return scheduleWrappers
     }
