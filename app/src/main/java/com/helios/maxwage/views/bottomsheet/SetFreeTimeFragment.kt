@@ -85,7 +85,7 @@ class SetFreeTimeFragment(val listener: IButtonScheduleClick) : BaseFragment() {
             btnScheduleJob.setOnClickListener {
                 listener.onButtonScheduleClick(
                     viewModel.selectedFreeTime,
-                    switchOnlyFavoriteJob.isSelected
+                    switchOnlyFavoriteJob.isChecked || binding.switchOnlyFavoriteJob.isSelected
                 )
             }
         }

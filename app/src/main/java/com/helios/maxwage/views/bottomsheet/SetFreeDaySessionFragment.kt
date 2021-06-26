@@ -41,7 +41,7 @@ class SetFreeDaySessionFragment(var listener: IButtonScheduleClick) : BaseFragme
             btnScheduleJob.setOnClickListener {
                 listener.onButtonScheduleClick(
                     viewModel.selectedWorkingShift,
-                    binding.switchOnlyFavoriteJob.isSelected
+                    binding.switchOnlyFavoriteJob.isChecked || binding.switchOnlyFavoriteJob.isSelected
                 )
             }
         }
